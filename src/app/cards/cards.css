@@ -1,0 +1,403 @@
+/* ========================================= */
+/* SEZIONE SPORT                             */
+/* ========================================= */
+
+.sports-section {
+  width: 100%;
+
+  background-color: #07111d;
+
+  padding: 42px 0 48px;
+}
+
+
+/* ========================================= */
+/* CONTENITORE                               */
+/* ========================================= */
+
+.sports-container {
+  width: 100%;
+  max-width: 1120px;
+
+  margin: 0 auto;
+
+  padding: 0 12px;
+}
+
+
+/* ========================================= */
+/* TITOLO                                    */
+/* ========================================= */
+
+.sports-title {
+  position: relative;
+
+  margin-bottom: 32px;
+}
+
+
+.sports-title h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  letter-spacing: 1px;
+}
+
+
+/* LINEA VERDE SOTTO IL TITOLO */
+
+.sports-title::after {
+
+  content: "";
+
+  display: block;
+
+  width: 112px;
+  height: 2px;
+
+  background-color: #9bd63a;
+
+  margin-top: 18px;
+
+}
+
+
+/* ========================================= */
+/* GRIGLIA CARD                              */
+/* ========================================= */
+
+.sports-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, 1fr);
+
+  gap: 34px;
+}
+
+
+/* ========================================= */
+/* CARD                                      */
+/* ========================================= */
+
+.sport-card {
+
+  height: 128px;
+
+  background-color: #062333;
+
+  border-radius: 16px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+
+}
+
+
+/* HOVER */
+
+.sport-card:hover {
+
+  transform: translateY(-4px);
+
+  background-color: #0a2c40;
+
+}
+
+
+/* ========================================= */
+/* ICONA                                     */
+/* ========================================= */
+
+.sport-icon {
+
+  width: 76px;
+  height: 76px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 3px;
+}
+
+
+.sport-icon svg {
+
+  width: 76px;
+  height: 76px;
+
+  overflow: visible;
+}
+
+
+/* ========================================= */
+/* CERCHIO ESTERNO                           */
+/* ========================================= */
+
+.icon-circle {
+
+  fill: none;
+
+  stroke: #ffffff;
+
+  stroke-width: 2.5;
+
+  stroke-dasharray: 42 7;
+
+}
+
+
+/* ========================================= */
+/* ARCO VERDE                                */
+/* ========================================= */
+
+.icon-green-arc {
+
+  fill: none;
+
+  stroke: #9bd63a;
+
+  stroke-width: 4;
+
+  stroke-linecap: round;
+
+}
+
+
+/* ========================================= */
+/* CALCIO                                    */
+/* ========================================= */
+
+.ball {
+
+  fill: #07111d;
+
+  stroke: #ffffff;
+
+  stroke-width: 2;
+
+}
+
+
+.ball-detail {
+
+  fill: #ffffff;
+
+}
+
+
+.ball-line {
+
+  stroke: #ffffff;
+
+  stroke-width: 1.5;
+
+}
+
+
+/* ========================================= */
+/* PADEL                                     */
+/* ========================================= */
+
+.padel-racket {
+
+  fill: #07111d;
+
+  stroke: #ffffff;
+
+  stroke-width: 2.5;
+
+}
+
+
+.padel-handle {
+
+  stroke: #ffffff;
+
+  stroke-width: 4;
+
+  stroke-linecap: round;
+
+}
+
+
+.padel-dot {
+
+  fill: #ffffff;
+
+}
+
+
+/* ========================================= */
+/* BASKET                                    */
+/* ========================================= */
+
+.basket-ball {
+
+  fill: #07111d;
+
+  stroke: #ffffff;
+
+  stroke-width: 2.5;
+
+}
+
+
+.basket-line {
+
+  fill: none;
+
+  stroke: #ffffff;
+
+  stroke-width: 2;
+
+}
+
+
+/* ========================================= */
+/* TENNIS                                    */
+/* ========================================= */
+
+.tennis-ball {
+
+  fill: #07111d;
+
+  stroke: #ffffff;
+
+  stroke-width: 2.5;
+
+}
+
+
+.tennis-line {
+
+  fill: none;
+
+  stroke: #ffffff;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+
+}
+
+
+/* ========================================= */
+/* BEACH VOLLEY                              */
+/* ========================================= */
+
+.volley-ball {
+
+  fill: #07111d;
+
+  stroke: #ffffff;
+
+  stroke-width: 2.5;
+
+}
+
+
+.volley-line {
+
+  fill: none;
+
+  stroke: #ffffff;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+
+}
+
+
+/* ========================================= */
+/* NOME SPORT                                */
+/* ========================================= */
+
+.sport-name {
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-align: center;
+
+}
+
+
+/* ========================================= */
+/* RESPONSIVE                                */
+/* ========================================= */
+
+@media (max-width: 1000px) {
+
+  .sports-grid {
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    gap: 20px;
+
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .sports-section {
+
+    padding: 30px 0;
+  }
+
+
+  .sports-grid {
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 15px;
+
+  }
+
+
+  .sport-card {
+
+    height: 125px;
+
+  }
+
+}
+
+
+@media (max-width: 400px) {
+
+  .sports-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+}

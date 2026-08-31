@@ -1,0 +1,282 @@
+/* ============================= */
+/* NAVBAR                        */
+/* ============================= */
+
+.main-navbar {
+  width: 100%;
+  height: 86px;
+
+  background-color: #07111d;
+
+  display: flex;
+  align-items: center;
+
+  color: white;
+}
+
+
+/* CONTENITORE PRINCIPALE */
+
+.navbar-container {
+  width: 100%;
+  max-width: 1120px;
+
+  margin: 0 auto;
+
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/* ============================= */
+/* MENU                          */
+/* ============================= */
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+
+  gap: 58px;
+}
+
+
+.navbar-link {
+  position: relative;
+
+  color: #f1f1f1;
+
+  text-decoration: none;
+
+  font-size: 20px;
+  font-weight: 400;
+
+  padding: 31px 0 24px;
+
+  transition: color 0.2s ease;
+}
+
+
+.navbar-link:hover {
+  color: #ffffff;
+}
+
+
+/* HOME ATTIVO */
+
+.navbar-link.active {
+  color: #ffffff;
+}
+
+
+/* LINEA VERDE SOTTO HOME */
+
+.navbar-link.active::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: 18px;
+
+  width: 63px;
+  height: 2px;
+
+  background-color: #9bd63a;
+
+}
+
+
+/* ============================= */
+/* PARTE DESTRA                  */
+/* ============================= */
+
+.navbar-user {
+
+  display: flex;
+  align-items: center;
+
+  gap: 22px;
+}
+
+
+/* ============================= */
+/* CAMPANELLA                    */
+/* ============================= */
+
+.notification-button {
+
+  border: none;
+  background: transparent;
+
+  color: #ffffff;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  padding: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.notification-button:hover {
+  color: #9bd63a;
+}
+
+
+/* ============================= */
+/* PROFILO                       */
+/* ============================= */
+
+.profile-container {
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+/* CERCHIO VERDE */
+
+.profile-circle {
+
+  width: 52px;
+  height: 52px;
+
+  border-radius: 50%;
+
+  background-color: #9bd63a;
+
+  color: #07111d;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+
+.profile-circle i {
+
+  font-size: 17px;
+
+  line-height: 16px;
+}
+
+
+.profile-circle span {
+
+  font-size: 9px;
+
+  margin-top: 2px;
+}
+
+
+/* ============================= */
+/* TESTO PROFILO                 */
+/* ============================= */
+
+.profile-text {
+
+  display: flex;
+  flex-direction: column;
+
+  line-height: 1.2;
+}
+
+
+.profile-name {
+
+  color: #8d8d8d;
+
+  font-size: 11px;
+}
+
+
+.profile-name strong {
+
+  color: #9bd63a;
+
+  font-size: 12px;
+}
+
+
+.profile-subtitle {
+
+  color: #8d8d8d;
+
+  font-size: 9px;
+
+  margin-top: 2px;
+}
+
+
+/* ============================= */
+/* RESPONSIVE                    */
+/* ============================= */
+
+@media (max-width: 900px) {
+
+  .navbar-menu {
+    gap: 25px;
+  }
+
+  .navbar-link {
+    font-size: 17px;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .navbar-container {
+    padding: 0 15px;
+  }
+
+  .navbar-menu {
+    gap: 15px;
+  }
+
+  .navbar-link {
+    font-size: 15px;
+  }
+
+  .profile-text {
+    display: none;
+  }
+
+}
+
+
+@media (max-width: 550px) {
+
+  .navbar-menu {
+    gap: 10px;
+  }
+
+  .navbar-link {
+    font-size: 13px;
+  }
+
+  .navbar-user {
+    gap: 8px;
+  }
+
+  .profile-circle {
+    width: 44px;
+    height: 44px;
+  }
+
+}

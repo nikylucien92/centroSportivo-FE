@@ -1,0 +1,79 @@
+<div
+  class="modal fade show"
+  tabindex="-1"
+  aria-labelledby="registerModalLabel"
+  aria-hidden="false"
+  style="display: block"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- HEADER -->
+
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="registerModalLabel">Accedi</h1>
+
+        <button type="button" class="btn-close" aria-label="Close" (click)="chiudiLogin()"></button>
+      </div>
+
+      <!-- BODY -->
+      <button type="button" class="btn btn-primary" (click)="apriRegistrazione()">
+        Non hai un account? Registrati
+      </button>
+
+      <div class="modal-body">
+        <form #registerForm="ngForm">
+          <div class="mb-3">
+            <label for="email" class="form-label"> Email </label>
+
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Inserisci email"
+              name="email"
+              [(ngModel)]="user.email"
+              #emailInput="ngModel"
+            />
+            @if (emailInput.touched && !validaEmail()) {
+              <div class="text-danger mt-1">Inserisci un'email valida</div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label"> Password </label>
+
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Inserisci password"
+              name="password"
+              [(ngModel)]="user.password"
+              #passwordInput="ngModel"
+            />
+            @if (passwordInput.touched && !validaPassword()) {
+              <div class="text-danger mt-1">
+                La password deve contenere almeno 8 caratteri, una lettera e un numero.
+              </div>
+            }
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="chiudiLogin()">
+                Chiudi
+              </button>
+
+              <button type="button" class="btn btn-primary" (click)="accedi()">Accedi</button>
+            </div>
+            <div class="modal">
+              <div class="modal-content">
+                <!-- FORM LOGIN -->
+
+                <button type="button" (click)="chiudiLogin()">X</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

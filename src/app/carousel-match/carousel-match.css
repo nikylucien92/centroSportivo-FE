@@ -1,0 +1,504 @@
+/* ========================================= */
+/* SEZIONE CAMPI IN EVIDENZA                  */
+/* ========================================= */
+
+.featured-section {
+
+  width: 100%;
+
+  background-color: #07111d;
+
+  padding: 28px 0 35px;
+
+}
+
+
+/* ========================================= */
+/* HEADER                                    */
+/* ========================================= */
+
+.featured-header {
+
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 22px;
+
+  padding: 0 8px;
+
+}
+
+
+.featured-title {
+
+display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+
+.featured-title h2 {
+
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  letter-spacing: 1px;
+
+}
+
+
+.title-line {
+
+  width: 76px;
+  display: inline-block;
+
+  height: 2px;
+
+  background-color: #9bd63a;
+
+}
+
+
+.view-all {
+
+  color: #9bd63a;
+
+  font-size: 14px;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+
+}
+
+
+.view-all:hover {
+
+  color: #ffffff;
+
+}
+
+
+/* ========================================= */
+/* CAROUSEL                                  */
+/* ========================================= */
+
+.carousel-container {
+
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+}
+
+
+/* ========================================= */
+/* CONTENITORE CARD                           */
+/* ========================================= */
+
+.cards-wrapper {
+
+  display: flex;
+
+  gap: 62px;
+
+  overflow-x: auto;
+
+  overflow-y: hidden;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+
+  padding: 0 0 5px;
+
+}
+
+
+/* Chrome / Edge / Safari */
+
+.cards-wrapper::-webkit-scrollbar {
+
+  display: none;
+
+}
+
+
+/* ========================================= */
+/* CARD                                      */
+/* ========================================= */
+
+.field-card {
+
+  flex: 0 0 260px;
+
+  width: 260px;
+
+  background-color: #062333;
+
+  border-radius: 0 0 15px 15px;
+
+  overflow: hidden;
+
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+
+.field-card:hover {
+
+  transform: translateY(-4px);
+
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+
+}
+
+
+/* ========================================= */
+/* IMMAGINE                                  */
+/* ========================================= */
+
+.card-image {
+
+  position: relative;
+
+  width: 100%;
+
+  height: 148px;
+
+  overflow: hidden;
+
+}
+
+
+.card-image img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+}
+
+
+/* ========================================= */
+/* LINEA VERDE                               */
+/* ========================================= */
+
+.card-image::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: 0;
+
+  width: 100%;
+
+  height: 7px;
+
+  background-color: #9bd63a;
+
+}
+
+
+/* ========================================= */
+/* BADGE SPORT                               */
+/* ========================================= */
+
+.sport-badge {
+
+  position: absolute;
+
+  top: 20px;
+
+  left: 20px;
+
+  z-index: 2;
+
+  background-color: rgba(7, 17, 29, 0.85);
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.5px;
+
+  padding: 5px 10px;
+
+  border-radius: 5px;
+
+}
+
+
+/* ========================================= */
+/* CONTENUTO CARD                            */
+/* ========================================= */
+
+.card-content {
+
+  padding: 13px 20px 18px;
+
+}
+
+
+.card-content h3 {
+
+  margin: 0 0 9px;
+
+  color: #ffffff;
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+}
+
+
+/* ========================================= */
+/* LOCALITÀ                                  */
+/* ========================================= */
+
+.location {
+
+  margin: 0 0 8px;
+
+  color: #909ba3;
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+}
+
+
+/* ========================================= */
+/* RATING                                    */
+/* ========================================= */
+
+.rating {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-bottom: 9px;
+
+}
+
+
+.star {
+
+  color: #ffd21c;
+
+  font-size: 21px;
+
+  line-height: 1;
+
+}
+
+
+.rating strong {
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+}
+
+
+.reviews {
+
+  color: #87939b;
+
+  font-size: 14px;
+
+}
+
+
+/* ========================================= */
+/* PREZZO                                    */
+/* ========================================= */
+
+.price {
+
+  color: #9bd63a;
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+}
+
+
+/* ========================================= */
+/* PULSANTE CAROUSEL                         */
+/* ========================================= */
+
+.carousel-next {
+
+  position: absolute;
+
+  right: 52px;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 48px;
+
+  height: 48px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background-color: #07516c;
+
+  color: #ffffff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: pointer;
+
+  z-index: 10;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+
+}
+
+
+.carousel-next span {
+
+  font-size: 34px;
+
+  font-weight: 300;
+
+  line-height: 1;
+
+  margin-top: -4px;
+
+}
+
+
+.carousel-next:hover {
+
+  background-color: #0b6b8d;
+
+  transform:
+    translateY(-50%)
+    scale(1.05);
+
+}
+
+
+/* ========================================= */
+/* RESPONSIVE                                */
+/* ========================================= */
+
+@media (max-width: 1000px) {
+
+  .cards-wrapper {
+
+    gap: 25px;
+
+  }
+
+  .field-card {
+
+    flex-basis: 250px;
+
+    width: 250px;
+
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .featured-header {
+
+    padding: 0 15px;
+
+  }
+
+  .cards-wrapper {
+
+    padding-left: 15px;
+
+    gap: 18px;
+
+  }
+
+  .field-card {
+
+    flex-basis: 280px;
+
+    width: 280px;
+
+  }
+
+  .carousel-next {
+
+    right: 15px;
+
+  }
+
+}
+
+
+@media (max-width: 450px) {
+
+  .field-card {
+
+    flex-basis: 290px;
+
+    width: 290px;
+
+  }
+
+  .view-all {
+
+    font-size: 12px;
+
+  }
+
+}
+
+.title-line{
+  color: antiquewhite;
+  margin-left: 20px;
+  font-size: small;
+}
