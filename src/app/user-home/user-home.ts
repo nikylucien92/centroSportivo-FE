@@ -1,15 +1,20 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Auth } from '../services/auth';
+import { Cards } from '../cards/cards';
+import { CarouselMatch } from '../carousel-match/carousel-match';
+
 @Component({
   selector: 'app-user-home',
-  imports: [],
+  imports: [Cards, CarouselMatch],
   templateUrl: './user-home.html',
   styleUrl: './user-home.css',
 })
 export class UserHome {
   
-    constructor(private router:Router ,private authService:Auth) {}
+    //private router:Router ,private authService:Auth
+    constructor() {
+          console.log('USER HOME CARICATA');
+
+    }
   nomeUtente='';
 
   ngOnInit(){
@@ -21,5 +26,11 @@ export class UserHome {
     }
   }
 
+/*
+  logout() {
+  this.authService.logout();
+  this.router.navigate(['/']);
+}
+*/
 
 }
