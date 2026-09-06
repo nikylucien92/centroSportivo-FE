@@ -2,55 +2,62 @@
   <div class="container">
     <div class="col-10 mx-auto">
       <div class="row">
-      <!-- MENU SINISTRA -->
-      <div class="navbar-menu">
-        <a class="navbar-link active" href="#"> Home </a>
+        <div class="navbar-menu">
+          <a class="navbar-link active" href="#"> Home </a>
 
-        <a class="navbar-link" href="#"> Campi </a>
+          <a class="navbar-link" href="#"> Campi </a>
 
-        <a class="navbar-link" href="#"> Partite </a>
+          <a class="navbar-link" href="#"> Partite </a>
 
-        <a class="navbar-link" href="#"> Tornei </a>
+          <a class="navbar-link" href="#"> Tornei </a>
 
-        <a class="navbar-link" href="#"> Community </a>
+          <a class="navbar-link" href="#"> Community </a>
+        </div>
       </div>
+    </div>
+
+    <div class="col-2 mx-auto">
+      <div class="row">
+        <div class="profile-container d-flex">
+          @if (!nomeUtente) {
+            <button type="button" class="btn btn-outline-light" (click)="openLogin()">
+              Accedi
+            </button>
+          }
+
+          @if (nomeUtente) {
+            <div class="dropdown">
+              <button type="button" class="btn btn-outline-light" (click)="apriDropdown()">
+                👤 {{ nomeUtente }} ▼
+              </button>
+
+              @if (mostraDropdown) {
+                <div class="dropdown-menu show">
+                  <button type="button" class="dropdown-item">Area personale</button>
+
+                  <button type="button" class="dropdown-item">Profilo</button>
+
+                  <button type="button" class="dropdown-item" (click)="logout()">Logout</button>
+                </div>
+              }
+            </div>
+          }
+        </div>
       </div>
     </div>
-
-<div class="col-2  mx-auto">
-    <div class="row">
-    <div class="profile-container d-flex">
-      <!-- Bottone per aprire la Login nella NavBar -->
-<button type="button" class="btn btn-outline-light" (click)="openLogin()">
-  Accedi
-</button>
-
-<!-- Modale Login -->
-@if (activeModal === 'login') {
-
-  <app-login
-    (login)="openRegister()"
-    (chiudi)="closeAll()">
-  </app-login>
-
-}
-
-<!-- Modale Registrazione -->
-@if (activeModal === 'register') {
-
-  <app-registrazione
-  (register)="openRegister()"
-    (chiudi)="closeAll()">
-  </app-registrazione>
-
-}
-      
-    </div>
-
-    </div>
-</div>
-
   </div>
 </nav>
 
+@if (activeModal === 'login') {
+  <app-login
+  (loginSuccess)="loginCompletato()" 
+  (registrazione)="openRegister()"
+    (chiudi)="closeAll()"
 
+  > </app-login>
+}
+
+@if (activeModal === 'register') {
+  <app-registrazione (register)="registrazioneCompletata()" (chiudi)="closeAll()">
+  </app-registrazione>
+}

@@ -1,134 +1,131 @@
-    <div
-      class="modal fade show"
-      tabindex="-1"
-      aria-labelledby="registerModalLabel"
-      aria-hidden="false"
-      style="display: block"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <!-- HEADER -->
+<div
+  class="modal fade show"
+  tabindex="-1"
+  aria-labelledby="registerModalLabel"
+  aria-hidden="false"
+  style="display: block"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- HEADER -->
 
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="registerModalLabel">Registrati</h1>
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="registerModalLabel">Registrati</h1>
 
-            <button
-              type="button"
-              class="btn-close"
-              aria-label="Close"
-              (click)="chiudiRegistrazione()"
-            ></button>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="chiudiRegistrazione()"
+        ></button>
+      </div>
+
+      <!-- BODY -->
+
+      <div class="modal-body">
+        <form #registerForm="ngForm">
+          <div class="mb-3">
+            <label for="nome" class="form-label"> Nome </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="nome"
+              id="nome"
+              placeholder="Inserisci il nome"
+              [(ngModel)]="user.nome"
+              #nomeInput="ngModel"
+            />
+            @if (nomeInput.touched && !validaNome()) {
+              <div class="text-danger mt-1">
+                Il nome deve contenere da 2 a 20 caratteri e solo lettere.
+              </div>
+            }
           </div>
 
-          <!-- BODY -->
+          <div class="mb-3">
+            <label for="cognome" class="form-label"> Cognome </label>
 
-          <div class="modal-body">
-            <form #registerForm="ngForm">
-              <div class="mb-3">
-                <label for="nome" class="form-label"> Nome </label>
-
-                <input
-                  type="text"
-                  class="form-control"
-                  name="nome"
-                  id="nome"
-                  placeholder="Inserisci il nome"
-                  [(ngModel)]="user.nome"
-                  #nomeInput="ngModel"
-                />
-                @if (nomeInput.touched && !validaNome()) {
-                  <div class="text-danger mt-1">
-                    Il nome deve contenere da 2 a 20 caratteri e solo lettere.
-                  </div>
-                }
+            <input
+              type="text"
+              class="form-control"
+              id="cognome"
+              placeholder="Inserisci il cognome"
+              name="cognome"
+              [(ngModel)]="user.cognome"
+              #cognomeInput="ngModel"
+            />
+            @if (cognomeInput.touched && !validaCognome()) {
+              <div class="text-danger mt-1">
+                Il cognome deve contenere da 2 a 20 caratteri e solo lettere.
               </div>
-
-              <div class="mb-3">
-                <label for="cognome" class="form-label"> Cognome </label>
-
-                <input
-                  type="text"
-                  class="form-control"
-                  id="cognome"
-                  placeholder="Inserisci il cognome"
-                  name="cognome"
-                  [(ngModel)]="user.cognome"
-                  #cognomeInput="ngModel"
-                />
-                @if (cognomeInput.touched && !validaCognome()) {
-                  <div class="text-danger mt-1">
-                    Il cognome deve contenere da 2 a 20 caratteri e solo lettere.
-                  </div>
-                }
-              </div>
-
-              <div class="mb-3">
-                <label for="email" class="form-label"> Email </label>
-
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  placeholder="Inserisci email"
-                  name="email"
-                  [(ngModel)]="user.email"
-                  #emailInput="ngModel"
-                />
-                @if (emailInput.touched && !validaEmail()) {
-                  <div class="text-danger mt-1">Inserisci un'email valida</div>
-                }
-              </div>
-
-              <div class="mb-3">
-                <label for="password" class="form-label"> Password </label>
-
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  placeholder="Inserisci password"
-                  name="password"
-                  [(ngModel)]="user.password"
-                  #passwordInput="ngModel"
-                />
-                @if (passwordInput.touched && !validaPassword()) {
-                  <div class="text-danger mt-1">
-                    La password deve contenere almeno 8 caratteri, una lettera e un numero.
-                  </div>
-                }
-              </div>
-
-              <div class="mb-3">
-                <label for="telefono" class="form-label"> Telefono </label>
-
-                <input
-                  type="text"
-                  class="form-control"
-                  id="telefono"
-                  placeholder="Inserisci telefono"
-                  name="telefono"
-                  [(ngModel)]="user.telefono"
-                  #telefonoInput="ngModel"
-                />
-                @if (telefonoInput.touched && !validaTelefono()) {
-                  <div class="text-danger mt-1">
-                    Inserisci un numero di telefono italiano valido.
-                  </div>
-                }
-              </div>
-            </form>
+            }
           </div>
 
-          <!-- FOOTER -->
+          <div class="mb-3">
+            <label for="email" class="form-label"> Email </label>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="chiudiRegistrazione()">
-              Chiudi
-            </button>
-
-            <button type="button" class="btn btn-primary" (click)="registrati()">Registrati</button>
-         
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Inserisci email"
+              name="email"
+              [(ngModel)]="user.email"
+              #emailInput="ngModel"
+            />
+            @if (emailInput.touched && !validaEmail()) {
+              <div class="text-danger mt-1">Inserisci un'email valida</div>
+            }
           </div>
-        </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label"> Password </label>
+
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Inserisci password"
+              name="password"
+              [(ngModel)]="user.password"
+              #passwordInput="ngModel"
+            />
+            @if (passwordInput.touched && !validaPassword()) {
+              <div class="text-danger mt-1">
+                La password deve contenere almeno 8 caratteri, una lettera e un numero.
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label for="telefono" class="form-label"> Telefono </label>
+
+            <input
+              type="text"
+              class="form-control"
+              id="telefono"
+              placeholder="Inserisci telefono"
+              name="telefono"
+              [(ngModel)]="user.telefono"
+              #telefonoInput="ngModel"
+            />
+            @if (telefonoInput.touched && !validaTelefono()) {
+              <div class="text-danger mt-1">Inserisci un numero di telefono italiano valido.</div>
+            }
+          </div>
+        </form>
+      </div>
+
+      <!-- FOOTER -->
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="chiudiRegistrazione()">
+          Chiudi
+        </button>
+
+        <button type="button" class="btn btn-primary" (click)="registrati()">Registrati</button>
       </div>
     </div>
+  </div>
+</div>

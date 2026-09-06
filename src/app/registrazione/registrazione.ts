@@ -1,156 +1,119 @@
-import { Component ,inject ,EventEmitter} from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RegisterRequest } from '../models/registerRequest.model';
 import { Auth } from '../services/auth';
-import { Router } from '@angular/router';
-import { Output } from '@angular/core';
+
 @Component({
   selector: 'app-registrazione',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './registrazione.html',
   styleUrl: './registrazione.css',
 })
 export class Registrazione {
-  
-
-  constructor(private router:Router){}
-
   private auth = inject(Auth);
 
-  modalRegister:boolean = false;
+  user: RegisterRequest = new RegisterRequest();
 
- @Output()
+  @Output()
   chiudi = new EventEmitter<void>();
 
-      @Output()
+  @Output()
   register = new EventEmitter<void>();
+  private nomeCognomeRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}$/;
 
+  private emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    messaggioConferma: string | null = null; // Variabile per mostrare il messaggio nella navbar
-  
-    user: RegisterRequest = new RegisterRequest();
-  
-    private nomeCognomeRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}$/;
-  
-    private emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
-    private passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
-  
-    private telefonoRegex = /^(?:(?:\+|00)39)?3\d{9}$/;
-  
-    apriRegistrazione(): void {
-      this.modalRegister = true;
-    }
-    chiudiRegistrazione(): void {
+  private passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
+  private telefonoRegex = /^(?:(?:\+|00)39)?3\d{9}$/;
+
+  chiudiRegistrazione(): void {
     this.chiudi.emit();
+  }
+
+  registrati(): void {
+    // Nome
+
+    if (!this.validaNome()) {
+      return;
     }
-    
-  
-  
-    registrati(): void {
-      if (!this.validaNome()) {
-        //RETURN interrompe immediatamente l'esecuzione di registrati()
-        return;
-      }
-  
-      if (!this.validaCognome()) {
-        return;
-      }
-  
-      if (!this.validaEmail()) {
-        return;
-      }
-  
-      if (!this.validaPassword()) {
-        return;
-      }
-      if (!this.validaTelefono()) {
-        return;
-      }
-      this.auth.register(this.user).subscribe({
-        next: (res) => {
-  
-         // Salvo il nome dell'utente
-        localStorage.setItem('nomeUtente', this.user.nome);
-  
-        // Mostro il banner verde
-        this.messaggioConferma =
-          'Registrazione effettuata con successo';
-  
-        // Chiudo la modal
-        this.chiudiRegistrazione();
-  
-        // Dopo 2 secondi vado alla nuova pagina
-        setTimeout(() => {
-          this.router.navigate(['/user-home']);
-          },2000);
-        },
-        error: (err) => {
-          console.error('Errore durante la registrazione:', err);
-        },
-      });
+
+    // Cognome
+
+    if (!this.validaCognome()) {
+      return;
     }
-  
-  
-  
-  
-    // ==========================================
-    // VALIDAZIONE NOME
-    // ==========================================
-  
-    validaNome(): boolean {
-      if (!this.user.nome) {
-        return false;
-      }
-  
-      return this.nomeCognomeRegex.test(this.user.nome.trim());
+
+    // Email
+
+    if (!this.validaEmail()) {
+      return;
     }
-  
-    // ==========================================
-    // VALIDAZIONE COGNOME
-    // ==========================================
-  
-    validaCognome(): boolean {
-      if (!this.user.cognome) {
-        return false;
-      }
-  
-      return this.nomeCognomeRegex.test(this.user.cognome.trim());
+
+    // Password
+
+    if (!this.validaPassword()) {
+      return;
     }
-  
-    // ==========================================
-    // VALIDAZIONE EMAIL
-    // ==========================================
-  
-    validaEmail(): boolean {
-      if (!this.user.email) {
-        return false;
-      }
-  
-      return this.emailRegex.test(this.user.email.trim());
+
+    // Telefono
+
+    if (!this.validaTelefono()) {
+      return;
     }
-  
-    // ==========================================
-    // VALIDAZIONE PASSWORD
-    // ==========================================
-  
-    validaPassword(): boolean {
-      if (!this.user.password) {
-        return false;
-      }
-  
-      return this.passwordRegex.test(this.user.password);
+
+    this.auth.register(this.user).subscribe({
+      next: (res) => {
+        console.log('Registrazione effettuata:', res);
+
+        this.auth.salvaAutenticazione(res.token, this.user.nome);
+
+        this.register.emit();
+      },
+
+      error: (err) => {
+        console.error('Errore durante la registrazione:', err);
+      },
+    });
+  }
+
+  validaNome(): boolean {
+    if (!this.user.nome) {
+      return false;
     }
-  
-    // ==========================================
-    // VALIDAZIONE TELEFONO
-    // ==========================================
-  
-    validaTelefono(): boolean {
-      if (!this.user.telefono) {
-        return false;
-      }
-  
-      return this.telefonoRegex.test(this.user.telefono.trim());
+
+    return this.nomeCognomeRegex.test(this.user.nome.trim());
+  }
+
+  validaCognome(): boolean {
+    if (!this.user.cognome) {
+      return false;
     }
+
+    return this.nomeCognomeRegex.test(this.user.cognome.trim());
+  }
+
+  validaEmail(): boolean {
+    if (!this.user.email) {
+      return false;
+    }
+
+    return this.emailRegex.test(this.user.email.trim());
+  }
+
+  validaPassword(): boolean {
+    if (!this.user.password) {
+      return false;
+    }
+
+    return this.passwordRegex.test(this.user.password);
+  }
+
+  validaTelefono(): boolean {
+    if (!this.user.telefono) {
+      return false;
+    }
+    return this.telefonoRegex.test(this.user.telefono.trim());
+  }
 }
