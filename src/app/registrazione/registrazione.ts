@@ -16,10 +16,8 @@ export class Registrazione {
   user: RegisterRequest = new RegisterRequest();
 
   @Output()
-  chiudi = new EventEmitter<void>();
-
-  @Output()
   register = new EventEmitter<void>();
+  
   private nomeCognomeRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}$/;
 
   private emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -28,9 +26,6 @@ export class Registrazione {
 
   private telefonoRegex = /^(?:(?:\+|00)39)?3\d{9}$/;
 
-  chiudiRegistrazione(): void {
-    this.chiudi.emit();
-  }
 
   registrati(): void {
     // Nome

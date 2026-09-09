@@ -1,16 +1,84 @@
-<app-navbar></app-navbar>
 
-@if (nomeUtente) {
 
-  <div class="welcome-message">
+<section class="hero">
 
-    Ciao {{ nomeUtente }},
-    benvenuto nella tua area personale!
+  
+  @if(!autenticato) {
+  <div class="hero-content">
+
+    <h1>
+      Trova il campo.<br>
+      Prenota. Gioca.<br>
+      <span>Connettiti.</span>
+    </h1>
+  </div>
+
+  }
+  
+
+  
+  @if (!autenticato) {
+
+  <!-- ================================= -->
+  <!-- SCHERMATA AUTENTICAZIONE          -->
+  <!-- ================================= -->
+
+  <div class="auth-page">
+
+        <!-- CONTENUTO LOGIN -->
+    <div class="auth-container">
+
+      @if (schermataAuth === 'login') {
+
+        <app-login
+          (loginSuccess)="loginCompletato()"
+          (registrazione)="apriRegistrazione()">
+        </app-login>
+
+      }
+
+
+      @if (schermataAuth === 'registrazione') {
+
+        <app-registrazione
+          (register)="registrazioneCompletata()">
+        </app-registrazione>
+
+      }
+
+    </div>
 
   </div>
 
 }
 
-<app-cards></app-cards>
 
-<app-carousel-match></app-carousel-match>
+@if (autenticato) {
+
+  <!-- ================================= -->
+  <!-- APPLICAZIONE PRINCIPALE           -->
+  <!-- ================================= -->
+<div class="container-fluid">
+  <div class="container">
+    <div class="row">
+      
+      <div class="col-12">
+        <app-navbar></app-navbar>
+      </div>
+
+      <div class="col-12">
+        <app-carousel-match></app-carousel-match>
+        <app-cards></app-cards>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+}
+  
+
+
+</section>

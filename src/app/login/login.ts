@@ -26,16 +26,11 @@ export class Login {
   @Output()
   registrazione = new EventEmitter<void>();
 
-  @Output()
-  chiudi = new EventEmitter<void>();
-
+ 
  apriRegistrazione(): void {
     this.registrazione.emit();
   }  
 
-  chiudiLogin(): void {
-    this.chiudi.emit();
-  }
 
 accedi(): void {
     // Controllo email

@@ -50,11 +50,11 @@
 
 @if (activeModal === 'login') {
   <app-login
-  (loginSuccess)="loginCompletato()" 
-  (registrazione)="openRegister()"
+    (loginSuccess)="loginCompletato()"
+    (registrazione)="openRegister()"
     (chiudi)="closeAll()"
-
-  > </app-login>
+  >
+  </app-login>
 }
 
 @if (activeModal === 'register') {

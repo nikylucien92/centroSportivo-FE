@@ -1,0 +1,197 @@
+<div
+  class="modal fade show"
+  tabindex="-1"
+  aria-hidden="false"
+  style="display: block"
+>
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content">
+
+
+      <!-- HEADER -->
+
+      <div class="modal-header">
+
+        <h1 class="modal-title fs-5">
+
+          Prenota {{ sport }}
+
+        </h1>
+
+        <button
+          type="button"
+          class="btn-close"
+          (click)="chiudiModal()"
+        ></button>
+
+      </div>
+
+
+      <!-- BODY -->
+
+      <div class="modal-body">
+
+        <form #prenotazioneForm="ngForm">
+
+          <!-- NUMERO GIOCATORI -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+
+              Numero giocatori
+
+            </label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="numeroGiocatori"
+              min="1"
+              [(ngModel)]="prenotazione.numeroGiocatori"
+              (ngModelChange)="calcoloPrezzoPersona()"
+            />
+
+          </div>
+
+
+          <!-- COSTO TOTALE -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+
+              Costo totale
+
+            </label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="costoTotale"
+              min="0"
+              step="0.01"
+              [(ngModel)]="prenotazione.costoTotale"
+              (ngModelChange)="calcoloPrezzoPersona()"
+            />
+
+          </div>
+
+
+          <!-- COSTO PERSONA -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+
+              Costo per persona
+
+            </label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="costoPersona"
+              [value]="prenotazione.costoPersona | number:'1.2-2'"
+              readonly
+            />
+
+          </div>
+
+
+          <!-- STATO PRENOTAZIONE -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+
+              Stato prenotazione
+
+            </label>
+
+            <select
+              class="form-select"
+              name="statoPrenotazione"
+              [(ngModel)]="prenotazione.statoPrenotazione"
+            >
+
+              <option value="NON_CONFERMATA">
+                Non confermata
+              </option>
+
+              <option value="CONFERMATA">
+                Confermata
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- DISPONIBILITA CAMPO -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+
+              Disponibilità campo
+
+            </label>
+
+            <select
+              class="form-select"
+              name="disponibilitaCampo"
+              [(ngModel)]="prenotazione.disponibilitaCampo"
+            >
+
+              <option value="LIBERO">
+                Libero
+              </option>
+
+              <option value="PRENOTATO">
+                Prenotato
+              </option>
+
+            </select>
+
+          </div>
+
+        </form>
+
+      </div>
+
+
+      <!-- FOOTER -->
+
+      <div class="modal-footer">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="chiudiModal()"
+        >
+
+          Chiudi
+
+        </button>
+
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="prenota()"
+        >
+
+          Prenota
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

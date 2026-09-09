@@ -1,312 +1,164 @@
-<!-- ============================= -->
-<!-- SEZIONE SPORT                  -->
-<!-- ============================= -->
-
 <section class="sports-section">
-
   <div class="sports-container">
-
     <!-- TITOLO -->
     <div class="sports-title">
-      <h2>SCEGLI IL TUO SPORT</h2>
+      <h2>PRENOTATI LIVE A UN INCONTRO</h2>
     </div>
-
 
     <!-- CARDS -->
     <div class="sports-grid">
-
-
-      <!-- ===================== -->
-      <!-- CALCIO                -->
-      <!-- ===================== -->
-
-      <div class="sport-card"
- >
-
-        <div class="sport-icon" >
-
+      <div class="sport-card" (click)="apriPrenotazione('CALCIO')">
+        <div class="sport-icon">
           <svg viewBox="0 0 100 100">
-
             <!-- cerchio esterno -->
-            <circle
-              cx="50"
-              cy="50"
-              r="34"
-              class="icon-circle"
-            />
+            <circle cx="50" cy="50" r="34" class="icon-circle" />
 
             <!-- arco verde -->
-            <path
-              d="M 72 27 A 34 34 0 0 1 72 73"
-              class="icon-green-arc"
-            />
+            <path d="M 72 27 A 34 34 0 0 1 72 73" class="icon-green-arc" />
 
             <!-- pallone -->
-            <circle
-              cx="50"
-              cy="50"
-              r="18"
-              class="ball"
-            />
+            <circle cx="50" cy="50" r="18" class="ball" />
 
             <!-- pentagono centrale -->
-            <polygon
-              points="50,42 58,47 55,57 45,57 42,47"
-              class="ball-detail"
-            />
+            <polygon points="50,42 58,47 55,57 45,57 42,47" class="ball-detail" />
 
             <!-- dettagli pallone -->
-            <line x1="50" y1="42" x2="50" y2="32" class="ball-line"/>
-            <line x1="42" y1="47" x2="34" y2="42" class="ball-line"/>
-            <line x1="45" y1="57" x2="39" y2="64" class="ball-line"/>
-            <line x1="55" y1="57" x2="61" y2="64" class="ball-line"/>
-            <line x1="58" y1="47" x2="66" y2="42" class="ball-line"/>
-
+            <line x1="50" y1="42" x2="50" y2="32" class="ball-line" />
+            <line x1="42" y1="47" x2="34" y2="42" class="ball-line" />
+            <line x1="45" y1="57" x2="39" y2="64" class="ball-line" />
+            <line x1="55" y1="57" x2="61" y2="64" class="ball-line" />
+            <line x1="58" y1="47" x2="66" y2="42" class="ball-line" />
           </svg>
-
         </div>
 
-        <span class="sport-name">
-          CALCIO
-        </span>
-
+        <span class="sport-name"> CALCIO </span>
       </div>
 
       <!-- ===================== -->
       <!-- PADEL                 -->
       <!-- ===================== -->
 
-      <div class="sport-card">
-
+      <div class="sport-card"(click)="apriPrenotazione('PADEL')"
+>
         <div class="sport-icon">
-
           <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="34" class="icon-circle" />
 
-            <circle
-              cx="50"
-              cy="50"
-              r="34"
-              class="icon-circle"
-            />
-
-            <path
-              d="M 72 27 A 34 34 0 0 1 72 73"
-              class="icon-green-arc"
-            />
+            <path d="M 72 27 A 34 34 0 0 1 72 73" class="icon-green-arc" />
 
             <!-- racchetta -->
-            <ellipse
-              cx="52"
-              cy="43"
-              rx="17"
-              ry="22"
-              class="padel-racket"
-            />
+            <ellipse cx="52" cy="43" rx="17" ry="22" class="padel-racket" />
 
             <!-- manico -->
-            <line
-              x1="40"
-              y1="59"
-              x2="29"
-              y2="73"
-              class="padel-handle"
-            />
+            <line x1="40" y1="59" x2="29" y2="73" class="padel-handle" />
 
             <!-- fori racchetta -->
-            <circle cx="45" cy="37" r="2" class="padel-dot"/>
-            <circle cx="52" cy="34" r="2" class="padel-dot"/>
-            <circle cx="59" cy="38" r="2" class="padel-dot"/>
-            <circle cx="45" cy="44" r="2" class="padel-dot"/>
-            <circle cx="52" cy="42" r="2" class="padel-dot"/>
-            <circle cx="59" cy="46" r="2" class="padel-dot"/>
-            <circle cx="49" cy="50" r="2" class="padel-dot"/>
-            <circle cx="56" cy="52" r="2" class="padel-dot"/>
-
+            <circle cx="45" cy="37" r="2" class="padel-dot" />
+            <circle cx="52" cy="34" r="2" class="padel-dot" />
+            <circle cx="59" cy="38" r="2" class="padel-dot" />
+            <circle cx="45" cy="44" r="2" class="padel-dot" />
+            <circle cx="52" cy="42" r="2" class="padel-dot" />
+            <circle cx="59" cy="46" r="2" class="padel-dot" />
+            <circle cx="49" cy="50" r="2" class="padel-dot" />
+            <circle cx="56" cy="52" r="2" class="padel-dot" />
           </svg>
-
         </div>
 
-        <span class="sport-name">
-          PADEL
-        </span>
-
+        <span class="sport-name"> PADEL </span>
       </div>
 
       <!-- ===================== -->
       <!-- BASKET                -->
       <!-- ===================== -->
 
-      <div class="sport-card">
-
+      <div class="sport-card"(click)="apriPrenotazione('BASKET')"
+>
+        
         <div class="sport-icon">
-
           <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="34" class="icon-circle" />
 
-            <circle
-              cx="50"
-              cy="50"
-              r="34"
-              class="icon-circle"
-            />
-
-            <path
-              d="M 72 27 A 34 34 0 0 1 72 73"
-              class="icon-green-arc"
-            />
+            <path d="M 72 27 A 34 34 0 0 1 72 73" class="icon-green-arc" />
 
             <!-- pallone basket -->
-            <circle
-              cx="50"
-              cy="50"
-              r="22"
-              class="basket-ball"
-            />
+            <circle cx="50" cy="50" r="22" class="basket-ball" />
 
             <!-- linee pallone -->
-            <path
-              d="M 28 50 H 72"
-              class="basket-line"
-            />
+            <path d="M 28 50 H 72" class="basket-line" />
 
-            <path
-              d="M 50 28 V 72"
-              class="basket-line"
-            />
+            <path d="M 50 28 V 72" class="basket-line" />
 
-            <path
-              d="M 34 34 Q 50 50 34 66"
-              class="basket-line"
-            />
+            <path d="M 34 34 Q 50 50 34 66" class="basket-line" />
 
-            <path
-              d="M 66 34 Q 50 50 66 66"
-              class="basket-line"
-            />
-
+            <path d="M 66 34 Q 50 50 66 66" class="basket-line" />
           </svg>
-
         </div>
 
-        <span class="sport-name">
-          BASKET
-        </span>
-
+        <span class="sport-name"> BASKET </span>
       </div>
 
       <!-- ===================== -->
       <!-- TENNIS                -->
       <!-- ===================== -->
 
-      <div class="sport-card"  >
-
+      <div class="sport-card" (click)="apriPrenotazione('TENNIS')">
         <div class="sport-icon">
-
           <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="34" class="icon-circle" />
 
-            <circle
-              cx="50"
-              cy="50"
-              r="34"
-              class="icon-circle"
-            />
-
-            <path
-              d="M 72 27 A 34 34 0 0 1 72 73"
-              class="icon-green-arc"
-            />
+            <path d="M 72 27 A 34 34 0 0 1 72 73" class="icon-green-arc" />
 
             <!-- pallina tennis -->
-            <circle
-              cx="50"
-              cy="50"
-              r="22"
-              class="tennis-ball"
-            />
+            <circle cx="50" cy="50" r="22" class="tennis-ball" />
 
             <!-- curva pallina -->
-            <path
-              d="M 38 30 Q 58 42 66 58 Q 69 64 70 70"
-              class="tennis-line"
-            />
+            <path d="M 38 30 Q 58 42 66 58 Q 69 64 70 70" class="tennis-line" />
 
-            <path
-              d="M 30 52 Q 43 54 53 67"
-              class="tennis-line"
-            />
-
+            <path d="M 30 52 Q 43 54 53 67" class="tennis-line" />
           </svg>
-
         </div>
 
-        <span class="sport-name">
-          TENNIS
-        </span>
-
+        <span class="sport-name"> TENNIS </span>
       </div>
 
       <!-- ===================== -->
       <!-- FUTSAL -->
       <!-- ===================== -->
 
-      <div class="sport-card" >
-
+      <div class="sport-card" (click)="apriPrenotazione('FUTSAL')">
         <div class="sport-icon">
-
           <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="34" class="icon-circle" />
 
-            <circle
-              cx="50"
-              cy="50"
-              r="34"
-              class="icon-circle"
-            />
-
-            <path
-              d="M 72 27 A 34 34 0 0 1 72 73"
-              class="icon-green-arc"
-            />
+            <path d="M 72 27 A 34 34 0 0 1 72 73" class="icon-green-arc" />
 
             <!-- pallone volley -->
-            <circle
-              cx="50"
-              cy="50"
-              r="22"
-              class="volley-ball"
-            />
+            <circle cx="50" cy="50" r="22" class="volley-ball" />
 
             <!-- pannelli -->
-            <path
-              d="M 50 28 Q 42 42 44 72"
-              class="volley-line"
-            />
+            <path d="M 50 28 Q 42 42 44 72" class="volley-line" />
 
-            <path
-              d="M 50 28 Q 63 38 70 48"
-              class="volley-line"
-            />
+            <path d="M 50 28 Q 63 38 70 48" class="volley-line" />
 
-            <path
-              d="M 29 49 Q 45 50 57 70"
-              class="volley-line"
-            />
+            <path d="M 29 49 Q 45 50 57 70" class="volley-line" />
 
-            <path
-              d="M 34 65 Q 48 55 68 58"
-              class="volley-line"
-            />
-
+            <path d="M 34 65 Q 48 55 68 58" class="volley-line" />
           </svg>
-
         </div>
 
-        <span class="sport-name">
-          FUTSAL
-        </span>
-
+        <span class="sport-name"> FUTSAL </span>
       </div>
- 
     </div>
-
   </div>
-
 </section>
+
+@if (mostraPrenotazione) {
+
+  <app-prenotazione-modal
+    [sport]="sportSelezionato"
+    (chiudi)="chiudiPrenotazione()"
+    (prenotazioneCompletata)="prenotazioneCompletata()"
+  >
+  </app-prenotazione-modal>
+
+}
