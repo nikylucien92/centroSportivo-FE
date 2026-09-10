@@ -1,17 +1,26 @@
-<div class="modal fade show" tabindex="-1" aria-hidden="false" style="display: block">
+<div
+  class="login-form"
+  tabindex="-1"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered">
+
     <div class="modal-content">
-    
+
       <div class="modal-header">
-        <h1 class="modal-title fs-5">Accedi</h1>
+        <h1 class="modal-title fs-5">
+          Accedi
+        </h1>
       </div>
 
-  
       <div class="modal-body">
+
         <form>
-   
+
           <div class="mb-3">
-            <label for="email" class="form-label"> Email </label>
+            <label for="email" class="form-label">
+              Email
+            </label>
 
             <input
               type="email"
@@ -25,7 +34,9 @@
           </div>
 
           <div class="mb-3">
-            <label for="password" class="form-label"> Password </label>
+            <label for="password" class="form-label">
+              Password
+            </label>
 
             <input
               type="password"
@@ -37,17 +48,31 @@
               required
             />
           </div>
-        </form>
-      </div>
 
+        </form>
+
+      </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="accedi()">Accedi</button>
 
-        <button type="button" class="btn btn-link" (click)="apriRegistrazione()">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="accedi()"
+        >
+          Accedi
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-link"
+          (click)="apriRegistrazione()"
+        >
           Non hai un account? Registrati
         </button>
+
       </div>
+
     </div>
   </div>
 </div>

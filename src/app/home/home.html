@@ -1,84 +1,84 @@
-
-
 <section class="hero">
 
-  
-  @if(!autenticato) {
-  <div class="hero-content">
-
-    <h1>
-      Trova il campo.<br>
-      Prenota. Gioca.<br>
-      <span>Connettiti.</span>
-    </h1>
-  </div>
-
-  }
-  
-
-  
   @if (!autenticato) {
 
-  <!-- ================================= -->
-  <!-- SCHERMATA AUTENTICAZIONE          -->
-  <!-- ================================= -->
+    <!-- SFONDO / TESTO -->
+    <div class="hero-content">
 
-  <div class="auth-page">
-
-        <!-- CONTENUTO LOGIN -->
-    <div class="auth-container">
-
-      @if (schermataAuth === 'login') {
-
-        <app-login
-          (loginSuccess)="loginCompletato()"
-          (registrazione)="apriRegistrazione()">
-        </app-login>
-
-      }
-
-
-      @if (schermataAuth === 'registrazione') {
-
-        <app-registrazione
-          (register)="registrazioneCompletata()">
-        </app-registrazione>
-
-      }
+      <h1>
+        Trova il campo.<br />
+        Prenota. Gioca.<br />
+        <span>Connettiti.</span>
+      </h1>
 
     </div>
 
-  </div>
+    <!-- BACKDROP -->
+    <div class="auth-backdrop"></div>
 
-}
+    <!-- FORM LOGIN -->
+    <div class="auth-page">
 
+      <div class="auth-container">
 
-@if (autenticato) {
+        @if (schermataAuth === 'login') {
 
-  <!-- ================================= -->
-  <!-- APPLICAZIONE PRINCIPALE           -->
-  <!-- ================================= -->
-<div class="container-fluid">
-  <div class="container">
-    <div class="row">
-      
-      <div class="col-12">
-        <app-navbar></app-navbar>
+          <app-login
+            (loginSuccess)="loginCompletato()"
+            (registrazione)="apriRegistrazione()">
+          </app-login>
+
+        }
+
+        @if (schermataAuth === 'registrazione') {
+
+          <app-registrazione
+            (register)="registrazioneCompletata()">
+          </app-registrazione>
+
+        }
+
       </div>
 
-      <div class="col-12">
-        <app-carousel-match></app-carousel-match>
-        <app-cards></app-cards>
-      </div>
     </div>
 
-  </div>
-</div>
+  }
 
 
+  @if (autenticato) {
 
-}
-  
+    <!-- APPLICAZIONE PRINCIPALE -->
 
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-12" id="app-navbar">
+          <app-navbar></app-navbar>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+
+        <div class="col-12" id="app-carousel">
+          <app-carousel-match></app-carousel-match>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+
+        <div class="col-12" id="app-cards">
+          <app-cards></app-cards>
+        </div>
+
+      </div>
+
+    </div>
+
+  }
 
 </section>
