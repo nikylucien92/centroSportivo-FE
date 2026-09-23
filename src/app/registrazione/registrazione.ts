@@ -16,14 +16,18 @@ export class Registrazione {
   user: RegisterRequest = new RegisterRequest();
 
   @Output()
+  chiudi= new EventEmitter<void>();
+
+  @Output()
   register = new EventEmitter<void>();
   
+  emit():void{
+    this.chiudi.emit();
+  }
+
   private nomeCognomeRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]{2,20}$/;
-
   private emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   private passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
-
   private telefonoRegex = /^(?:(?:\+|00)39)?3\d{9}$/;
 
 
@@ -62,7 +66,7 @@ export class Registrazione {
       next: (res) => {
         console.log('Registrazione effettuata:', res);
 
-        this.auth.salvaAutenticazione(res.token, this.user.nome);
+        this.auth.salvaAutenticazione(res.token, res.nome, res.idUtente);
 
         this.register.emit();
       },

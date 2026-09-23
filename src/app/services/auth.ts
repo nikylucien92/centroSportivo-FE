@@ -4,12 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { RegisterRequest } from '../models/registerRequest.model';
 import { LoginRequest } from '../models/loginRequest';
-
-
-export interface AuthResponse {
-  token: string;
-  nome: string;
-}
+import { AuthResponse } from '../models/authResponse';
 
 
 @Injectable({
@@ -78,7 +73,8 @@ export class Auth {
 
   salvaAutenticazione(
     token: string,
-    nomeUtente: string
+    nomeUtente: string,
+    idUtente: number
   ): void {
 
     localStorage.setItem('token', token);
@@ -88,6 +84,11 @@ export class Auth {
       nomeUtente
     );
 
+    localStorage.setItem(
+      'idUtente',
+      idUtente.toString()
+    );
+
     // Comunica a Navbar e Home
     // che l'utente è autenticato
     this.nomeUtenteSubject.next(nomeUtente);
@@ -95,15 +96,31 @@ export class Auth {
   }
 
 
-  // =====================================================
-  // LOGOUT
-  // =====================================================
+  // TOKEN E ID UTENTE
 
+  getToken(): string | null {
+
+    return localStorage.getItem('token');
+
+  }
+
+  getIdUtente(): number | null {
+
+    const id = localStorage.getItem('idUtente');
+
+    return id !== null ? Number(id) : null;
+
+  }
+
+
+  // LOGOUT
   logout(): void {
 
     localStorage.removeItem('token');
 
     localStorage.removeItem('nomeUtente');
+
+    localStorage.removeItem('idUtente');
 
     this.nomeUtenteSubject.next(null);
 

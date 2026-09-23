@@ -53,6 +53,10 @@ export class Home implements OnInit {
     this.schermataAuth = 'login';
 
   }
+  chiudiRegistrazione(): void {
+  this.schermataAuth = 'login';
+}
+
 
   loginCompletato(): void {
 

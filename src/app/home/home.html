@@ -33,7 +33,10 @@
         @if (schermataAuth === 'registrazione') {
 
           <app-registrazione
-            (register)="registrazioneCompletata()">
+            (register)="registrazioneCompletata()"
+            (chiudi)="chiudiRegistrazione()"
+            >
+            
           </app-registrazione>
 
         }

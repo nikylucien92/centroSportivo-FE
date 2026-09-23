@@ -33,16 +33,79 @@
 
       <div class="modal-body">
 
+        @if (messaggioErrore) {
+          <div class="alert alert-danger" role="alert">
+            {{ messaggioErrore }}
+          </div>
+        }
+
+        @if (campo) {
+          <p class="mb-3">
+            <strong>{{ campo.nome }}</strong> — {{ campo.prezzo | number:'1.2-2' }} € / ora
+          </p>
+        }
+
         <form #prenotazioneForm="ngForm">
+
+          <!-- DATA -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Data
+            </label>
+
+            <input
+              type="date"
+              class="form-control"
+              name="dataSelezionata"
+              [(ngModel)]="dataSelezionata"
+              (ngModelChange)="onCambioData()"
+            />
+
+          </div>
+
+
+          <!-- ORARIO DISPONIBILE -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Orario disponibile
+            </label>
+
+            <select
+              class="form-select"
+              name="disponibilitaCampoId"
+              [(ngModel)]="disponibilitaCampoId"
+              [disabled]="caricamento || slotDisponibili.length === 0"
+            >
+              <option [ngValue]="null" disabled>
+                @if (caricamento) {
+                  Caricamento in corso...
+                } @else if (slotDisponibili.length === 0) {
+                  Nessun orario disponibile in questa data
+                } @else {
+                  Seleziona un orario
+                }
+              </option>
+
+              @for (slot of slotDisponibili; track slot.id) {
+                <option [ngValue]="slot.id">
+                  {{ formattaOrario(slot) }}
+                </option>
+              }
+            </select>
+
+          </div>
+
 
           <!-- NUMERO GIOCATORI -->
 
           <div class="mb-3">
 
             <label class="form-label">
-
               Numero giocatori
-
             </label>
 
             <input
@@ -50,31 +113,26 @@
               class="form-control"
               name="numeroGiocatori"
               min="1"
-              [(ngModel)]="prenotazione.numeroGiocatori"
+              [(ngModel)]="numeroGiocatori"
               (ngModelChange)="calcoloPrezzoPersona()"
             />
 
           </div>
 
 
-          <!-- COSTO TOTALE -->
+          <!-- COSTO TOTALE (di sola lettura: deriva dal prezzo del campo) -->
 
           <div class="mb-3">
 
             <label class="form-label">
-
               Costo totale
-
             </label>
 
             <input
-              type="number"
+              type="text"
               class="form-control"
-              name="costoTotale"
-              min="0"
-              step="0.01"
-              [(ngModel)]="prenotazione.costoTotale"
-              (ngModelChange)="calcoloPrezzoPersona()"
+              [value]="(costoTotale | number:'1.2-2') + ' €'"
+              readonly
             />
 
           </div>
@@ -85,76 +143,15 @@
           <div class="mb-3">
 
             <label class="form-label">
-
               Costo per persona
-
             </label>
 
             <input
-              type="number"
+              type="text"
               class="form-control"
-              name="costoPersona"
-              [value]="prenotazione.costoPersona | number:'1.2-2'"
+              [value]="(costoPersona | number:'1.2-2') + ' €'"
               readonly
             />
-
-          </div>
-
-
-          <!-- STATO PRENOTAZIONE -->
-
-          <div class="mb-3">
-
-            <label class="form-label">
-
-              Stato prenotazione
-
-            </label>
-
-            <select
-              class="form-select"
-              name="statoPrenotazione"
-              [(ngModel)]="prenotazione.statoPrenotazione"
-            >
-
-              <option value="NON_CONFERMATA">
-                Non confermata
-              </option>
-
-              <option value="CONFERMATA">
-                Confermata
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <!-- DISPONIBILITA CAMPO -->
-
-          <div class="mb-3">
-
-            <label class="form-label">
-
-              Disponibilità campo
-
-            </label>
-
-            <select
-              class="form-select"
-              name="disponibilitaCampo"
-              [(ngModel)]="prenotazione.disponibilitaCampo"
-            >
-
-              <option value="LIBERO">
-                Libero
-              </option>
-
-              <option value="PRENOTATO">
-                Prenotato
-              </option>
-
-            </select>
 
           </div>
 
@@ -181,10 +178,15 @@
         <button
           type="button"
           class="btn btn-primary"
+          [disabled]="invioInCorso || disponibilitaCampoId === null"
           (click)="prenota()"
         >
 
-          Prenota
+          @if (invioInCorso) {
+            Prenotazione in corso...
+          } @else {
+            Prenota
+          }
 
         </button>
 

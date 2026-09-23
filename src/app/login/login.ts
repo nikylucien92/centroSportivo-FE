@@ -53,7 +53,7 @@ accedi(): void {
       next: (res) => {
         console.log('Login effettuato con successo', res);
 
-        this.auth.salvaAutenticazione(res.token, res.nome);
+        this.auth.salvaAutenticazione(res.token, res.nome, res.idUtente);
         this.loginSuccess.emit();
       },
 
