@@ -1,0 +1,31 @@
+.btn-registrati{
+      width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #000000;
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.btn-registrati:hover {
+  background-color: #222222;
+}
+.btn-chiudi{
+          width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #5b4040;
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.btn-chiudi:hover{
+      background-color: #e7e4e4;
+    color:#5b4040;
+}
