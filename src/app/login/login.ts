@@ -14,10 +14,9 @@ export class Login {
 
   private auth = inject(Auth);
 
-  userLogin: LoginRequest = {
-    email: '',
-    password: '',
-  };
+  userLogin: LoginRequest = new LoginRequest();
+  
+  private emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
    @Output()
   loginSuccess = new EventEmitter<void>();
@@ -36,14 +35,14 @@ accedi(): void {
     // Controllo email
 
     if (!this.userLogin.email.trim()) {
-      console.log('L\'email non può essere vuota');
+
       return;
     }
 
     // Controllo password
 
     if (!this.userLogin.password) {
-      console.log('La password non può essere vuota');
+
       return;
     }
 
@@ -61,6 +60,15 @@ accedi(): void {
         console.error('Errore durante il login:', err);
       },
     });
+  }
+
+  
+  validaEmail(): boolean {
+    if (!this.userLogin.email) {
+      return false;
+    }
+
+    return this.emailRegex.test(this.userLogin.email.trim());
   }
 
 

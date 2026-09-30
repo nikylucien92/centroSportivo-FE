@@ -29,8 +29,13 @@
               name="email"
               placeholder="Inserisci email"
               [(ngModel)]="userLogin.email"
-              required
+              #inputEmail="ngModel"
             />
+            @if (inputEmail.touched && !validaEmail()) {
+              <div class="text-danger mt-1">
+                Imposta un formato corretto
+              </div>
+            }
           </div>
 
           <div class="mb-3">
@@ -45,7 +50,7 @@
               name="password"
               placeholder="Inserisci password"
               [(ngModel)]="userLogin.password"
-              required
+              
             />
           </div>
 
