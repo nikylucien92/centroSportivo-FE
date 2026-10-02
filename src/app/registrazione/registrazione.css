@@ -44,7 +44,7 @@
   display: inline-block;
   color: #000000 !important;
   margin-bottom: 20px !important;
-  font-weight: 600;
+  font-weight: 400;
 }
 .modal-content {
   background-color: #03e70e;
@@ -54,4 +54,14 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Ombra morbida moderna */
   padding: 24px;
   overflow: hidden;
+}
+.modal-header {
+  border-bottom: none;
+  padding: 0 0 16px 0;
+  text-align: center;
+  display: block; /* Assicura la centratura del titolo */
+}
+.titolo{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
 }

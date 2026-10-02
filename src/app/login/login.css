@@ -22,7 +22,7 @@
   display: inline-block;
   color: #000000 !important;
   margin-bottom: 20px !important;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 /* Header */
@@ -84,4 +84,10 @@
 .modal-footer .btn-link:hover {
   text-decoration: underline;
   opacity: 0.8;
+}
+
+
+.titolo{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
 }
