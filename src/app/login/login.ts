@@ -16,7 +16,9 @@ export class Login {
 
   userLogin: LoginRequest = new LoginRequest();
   
-  private emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  private emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  msgError:string = "";
+
 
    @Output()
   loginSuccess = new EventEmitter<void>();
@@ -32,22 +34,39 @@ export class Login {
 
 
 accedi(): void {
-    // Controllo email
 
-    if (!this.userLogin.email.trim()) {
+  //Pulitura di eventuali messaggi di errore precedenti
+  this.msgError='';
 
+/*se per qualche motivo email fosse undefined 
+(es. prima che l'utente scriva qualcosa, a seconda
+ di come inizializzi LoginRequest), questo va in crash prima
+  ancora di arrivare al controllo.
+ Meglio this.userLogin.email?.trim() con optional chaining*/
+
+    if (!this.userLogin.email?.trim()) {
+      this.msgError = 'INSERISCI LA TUA EMAIL PER ACCEDERE ';
       return;
     }
 
-    // Controllo password
+    if (!this.validaEmail()) {
+      this.msgError = 'Inserisci un formato email valido.';
+      return;
+    }
+
 
     if (!this.userLogin.password) {
-
+      this.msgError = 'INSERISCI LA TUA PASSWORD PER ACCEDERE ';
       return;
     }
 
-    // Chiamata al backend
+    if (!this.validaPassword()) {
+      this.msgError = 'La password deve contenere almeno 6 caratteri.';
+      return;
+    }
 
+
+    // Chiamata al backend
     this.auth.login(this.userLogin).subscribe({
       next: (res) => {
         console.log('Login effettuato con successo', res);
@@ -57,8 +76,19 @@ accedi(): void {
       },
 
       error: (err) => {
-        console.error('Errore durante il login:', err);
-      },
+        //console.error('Errore durante il login:', err);
+       // this.msgError="EMAIL O PASSWORD NON CORRETTI";
+        //this.msgError = err?.error?.message || 'Email o password non corretti';
+       console.log('==============================');
+  console.log('ERRORE LOGIN FRONTEND');
+  console.log('STATUS:', err.status);
+  console.log('STATUS TEXT:', err.statusText);
+  console.log('ERROR:', err.error);
+  console.log('==============================');
+
+  this.msgError = 'EMAIL O PASSWORD NON CORRETTI';
+      
+      }
     });
   }
 
@@ -69,6 +99,17 @@ accedi(): void {
     }
 
     return this.emailRegex.test(this.userLogin.email.trim());
+    this.msgError = "EMAIL O PASSWORD NON CORRETTI";
+  }
+
+  validaPassword():boolean{
+    if(!this.userLogin.password)
+    {
+      return false;
+    }
+    return this.userLogin.password.length >5;
+        this.msgError = "EMAIL O PASSWORD NON CORRETTI";
+
   }
 
 

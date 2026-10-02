@@ -14,6 +14,12 @@
       </div>
 
       <div class="modal-body">
+  
+        @if(msgError) {
+          <div class="alert alert-danger" role="alert">
+            {{ msgError }}
+          </div>
+        }
 
         <form>
 
@@ -33,7 +39,7 @@
             />
             @if (inputEmail.touched && !validaEmail()) {
               <div class="text-danger mt-1">
-                Imposta un formato corretto
+                Imposta un formato corretto per l'email es. esempio@dominio.com
               </div>
             }
           </div>
@@ -50,8 +56,13 @@
               name="password"
               placeholder="Inserisci password"
               [(ngModel)]="userLogin.password"
-              
+              #inputPassword="ngModel"
             />
+            @if(inputPassword.touched && !validaPassword()) {
+              <div class="text-danger mt-1">
+                Imposta un formato corretto per la password (minimo 6 caratteri)
+              </div>
+            } 
           </div>
 
         </form>

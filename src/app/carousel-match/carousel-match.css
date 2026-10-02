@@ -109,19 +109,12 @@ display: flex;
 /* ========================================= */
 
 .cards-wrapper {
-
   display: flex;
-
   gap: 62px;
-
   overflow-x: auto;
-
   overflow-y: hidden;
-
   scroll-behavior: smooth;
-
   scrollbar-width: none;
-
   padding: 0 0 5px;
 
 }
@@ -132,7 +125,6 @@ display: flex;
 .cards-wrapper::-webkit-scrollbar {
 
   display: none;
-
 }
 
 
@@ -143,13 +135,11 @@ display: flex;
 .field-card {
 
   flex: 0 0 260px;
-
   width: 260px;
 
   background-color: #062333;
 
   border-radius: 0 0 15px 15px;
-
   overflow: hidden;
 
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);

@@ -5,12 +5,12 @@
   aria-hidden="false"
   style="display: block"
 >
-  <div class="modal-dialog modal-dialog-centered ">
-    <div class="modal-content mod-register">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
       <!-- HEADER -->
 
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="registerModalLabel">Registrati</h1>
+      <div class="mod">
+        <h1 class="modal-title">Registrati</h1>
 
        
       </div>
@@ -18,6 +18,14 @@
       <!-- BODY -->
 
       <div class="modal-body">
+        @if(messaggioError){
+          <div class="alert alert-danger" role="alert">
+            {{messaggioError}}
+            </div>
+
+        }
+
+
         <form #registerForm="ngForm">
           <div class="mb-3">
             <label for="nome" class="form-label"> Nome </label>
@@ -114,7 +122,7 @@
 
       <!-- FOOTER -->
 
-      <div class="modal-footer">
+      <div class="mod-form">
 
         <button type="button" class="btn-registrati" (click)="registrati()">Registrati</button>
        <button type="button" class="btn-chiudi" (click)="emit()">Chiudi</button>

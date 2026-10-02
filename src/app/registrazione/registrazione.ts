@@ -30,9 +30,13 @@ export class Registrazione {
   private passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
   private telefonoRegex = /^(?:(?:\+|00)39)?3\d{9}$/;
 
+  messaggioError:string='';
+
 
   registrati(): void {
     // Nome
+    this.messaggioError='';
+
 
     if (!this.validaNome()) {
       return;
@@ -65,14 +69,13 @@ export class Registrazione {
     this.auth.register(this.user).subscribe({
       next: (res) => {
         console.log('Registrazione effettuata:', res);
-
         this.auth.salvaAutenticazione(res.token, res.nome, res.idUtente);
-
         this.register.emit();
       },
 
       error: (err) => {
         console.error('Errore durante la registrazione:', err);
+        this.messaggioError = 'Errore durante la registrazione';  
       },
     });
   }
