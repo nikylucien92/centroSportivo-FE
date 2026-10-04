@@ -11,110 +11,129 @@
 
       <div class="modal-header">
         <h3 class="titolo">Registrati</h3>
-
-       
       </div>
 
       <!-- BODY -->
 
       <div class="modal-body">
-        @if(messaggioError){
+        @if (messaggioError) {
           <div class="alert alert-danger" role="alert">
-            {{messaggioError}}
-            </div>
-
+            {{ messaggioError }}
+          </div>
         }
+        <!--qualsiasi campo obbligatorio senza valore verrà visualizzato come non valido al caricamento della pagina -->
+        <form class="needs-validation" #registerForm="ngForm" novalidate>
+          <div class="input-group has-validation">
+            <div class="col-12 mb-2">
+              <label for="nome" class="form-label"> Nome </label>
 
-        <form #registerForm="ngForm">
-          <div class="mb-3">
-            <label for="nome" class="form-label"> Nome </label>
+              <input
+                type="text"
+                class="form-control "
+                name="nome"
+                placeholder="Inserisci il nome"
+                [(ngModel)]="user.nome"
+                #nomeInput="ngModel"
+                required
+                id="nome"
+                [class.is-invalid]="nomeInput.touched && !validaNome()"
 
-            <input
-              type="text"
-              class="form-control"
-              name="nome"
-              id="nome"
-              placeholder="Inserisci il nome"
-              [(ngModel)]="user.nome"
-              #nomeInput="ngModel"
-            />
-            @if (nomeInput.touched && !validaNome()) {
-              <div class="text-danger mt-1">
-                Il nome deve contenere da 2 a 20 caratteri e solo lettere.
-              </div>
-            }
+              />
+
+              @if (nomeInput.touched && !validaNome()) {
+                <div class="text-danger mt-1">
+                  Il nome deve contenere da 2 a 20 caratteri e solo lettere.
+                </div>
+              }
+            </div>
           </div>
 
-          <div class="mb-3">
-            <label for="cognome" class="form-label"> Cognome </label>
+          <div class="input-group has-validation">
+            <div class="col-12 mb2">
+              <label for="cognome" class="form-label"> Cognome </label>
 
-            <input
-              type="text"
-              class="form-control"
-              id="cognome"
-              placeholder="Inserisci il cognome"
-              name="cognome"
-              [(ngModel)]="user.cognome"
-              #cognomeInput="ngModel"
-            />
-            @if (cognomeInput.touched && !validaCognome()) {
-              <div class="text-danger mt-1">
-                Il cognome deve contenere da 2 a 20 caratteri e solo lettere.
-              </div>
-            }
+              <input
+                type="text"
+                class="form-control"
+                id="cognome"
+                placeholder="Inserisci il cognome"
+                name="cognome"
+                [(ngModel)]="user.cognome"
+                #cognomeInput="ngModel"
+                required
+                [class.is-invalid]="cognomeInput.touched && !validaCognome()"
+              />
+
+              @if (cognomeInput.touched && !validaCognome()) {
+                <div class="text-danger mt-1">
+                  Il cognome deve contenere da 2 a 20 caratteri e solo lettere.
+                </div>
+              }
+            </div>
           </div>
 
-          <div class="mb-3">
-            <label for="email" class="form-label"> Email </label>
+          <div class="input-group has-validation">
+            <div class="col-12 mb-2">
+              <label for="email" class="form-label"> Email </label>
 
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              placeholder="Inserisci email"
-              name="email"
-              [(ngModel)]="user.email"
-              #emailInput="ngModel"
-            />
-            @if (emailInput.touched && !validaEmail()) {
-              <div class="text-danger mt-1">Inserisci un'email valida</div>
-            }
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="Inserisci email"
+                name="email"
+                [(ngModel)]="user.email"
+                #emailInput="ngModel"
+                required
+                [class.is-invalid]="emailInput.touched && !validaEmail()"
+              />
+              @if (emailInput.touched && !validaEmail()) {
+                <div class="text-danger mt-1">Inserisci un'email valida</div>
+              }
+            </div>
           </div>
 
-          <div class="mb-3">
-            <label for="password" class="form-label"> Password </label>
+          <div class="input-group has-validation">
+            <div class="col-12 mb-2">
+              <label for="telefono" class="form-label"> Telefono </label>
 
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              placeholder="Inserisci password"
-              name="password"
-              [(ngModel)]="user.password"
-              #passwordInput="ngModel"
-            />
-            @if (passwordInput.touched && !validaPassword()) {
-              <div class="text-danger mt-1">
-                La password deve contenere almeno 8 caratteri, una lettera e un numero.
-              </div>
-            }
+              <input
+                type="text"
+                class="form-control"
+                id="telefono"
+                placeholder="Inserisci telefono"
+                name="telefono"
+                [(ngModel)]="user.telefono"
+                #telefonoInput="ngModel"
+                required
+                [class.is-invalid]="telefonoInput.touched && !validaTelefono()"
+              />
+              @if (telefonoInput.touched && !validaTelefono()) {
+                <div class="text-danger mt-1">Inserisci un numero di telefono italiano valido.</div>
+              }
+            </div>
           </div>
+              <div class="input-group has-validation">
+            <div class="col-12 mb-2">
+              <label for="password" class="form-label"> Password </label>
 
-          <div class="mb-3">
-            <label for="telefono" class="form-label"> Telefono </label>
-
-            <input
-              type="text"
-              class="form-control"
-              id="telefono"
-              placeholder="Inserisci telefono"
-              name="telefono"
-              [(ngModel)]="user.telefono"
-              #telefonoInput="ngModel"
-            />
-            @if (telefonoInput.touched && !validaTelefono()) {
-              <div class="text-danger mt-1">Inserisci un numero di telefono italiano valido.</div>
-            }
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Inserisci password"
+                name="password"
+                [(ngModel)]="user.password"
+                #passwordInput="ngModel"
+                required
+                [class.is-invalid]="passwordInput.touched && !validaPassword()"
+              />
+              @if (passwordInput.touched && !validaPassword()) {
+                <div class="text-danger mt-1">
+                  La password deve contenere almeno 8 caratteri, una lettera e un numero.
+                </div>
+              }
+            </div>
           </div>
         </form>
       </div>
@@ -122,10 +141,8 @@
       <!-- FOOTER -->
 
       <div class="mod-form">
-
         <button type="button" class="btn-registrati" (click)="registrati()">Registrati</button>
-       <button type="button" class="btn-chiudi" (click)="emit()">Chiudi</button>
-
+        <button type="button" class="btn-chiudi" (click)="emit()">Chiudi</button>
       </div>
     </div>
   </div>
