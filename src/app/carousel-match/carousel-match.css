@@ -1,69 +1,39 @@
-/* ========================================= */
-/* SEZIONE CAMPI IN EVIDENZA                  */
-/* ========================================= */
 
 .featured-section {
-
   width: 100%;
-
   background-color: #07111d;
-
-  padding: 28px 0 35px;
-
-}
-
-
-/* ========================================= */
-/* HEADER                                    */
-/* ========================================= */
-
-.featured-header {
-
-  width: 100%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  margin-bottom: 22px;
-
-  padding: 0 8px;
-
+  padding:10px;
 }
 
 
 .featured-title {
-
-display: flex;
-  align-items: center;
-  gap: 15px;
+  display: block;
+  padding:10px;
+  width:100%;
 }
 
 
 .featured-title h2 {
-
-  margin: 0;
-
-  color: #ffffff;
-
-  font-size: 15px;
-
+  font-size: 20px;
   font-weight: 600;
-
-  letter-spacing: 1px;
-
+ color: #ffffff;
+  text-align: left;
 }
+
+.featured-title h1 {
+  font-size: 13px;
+  font-weight: 600;
+ color: #ffffff;
+  text-align: left;
+}
+
 
 
 .title-line {
 
   width: 76px;
   display: inline-block;
-
   height: 2px;
-
   background-color: #9bd63a;
 
 }
@@ -72,11 +42,8 @@ display: flex;
 .view-all {
 
   color: #9bd63a;
-
   font-size: 14px;
-
   text-decoration: none;
-
   transition: color 0.2s ease;
 
 }
@@ -85,7 +52,6 @@ display: flex;
 .view-all:hover {
 
   color: #ffffff;
-
 }
 
 
@@ -95,12 +61,10 @@ display: flex;
 
 .carousel-container {
 
+  text-align: start;
   position: relative;
-
   width: 100%;
-
-  overflow: hidden;
-
+  height: 300px;
 }
 
 
@@ -115,8 +79,9 @@ display: flex;
   overflow-y: hidden;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  padding: 0 0 5px;
-
+  padding: 0 0 30px;
+  margin:0 0 0 20px;
+  cursor:pointer;
 }
 
 
