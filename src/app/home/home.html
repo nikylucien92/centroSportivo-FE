@@ -13,10 +13,10 @@
 
     </div>
 
-    <!-- BACKDROP -->
+
     <div class="auth-backdrop"></div>
 
-    <!-- FORM LOGIN -->
+
     <div class="auth-page">
 
       <div class="auth-container">
@@ -47,8 +47,8 @@
 
   }
 
-
-  @if (autenticato) {
+  
+    @if (autenticato) {
 
     <!-- APPLICAZIONE PRINCIPALE -->
 
@@ -61,11 +61,12 @@
         </div>
 
       </div>
-
+      
 
       <div class="row">
 
         <div class="col-12" id="app-carousel">
+
           <app-carousel-match></app-carousel-match>
         </div>
 
@@ -85,3 +86,45 @@
   }
 
 </section>
+
+
+@if (mostraToasts()) {
+
+  <div
+    class="position-fixed bottom-0 end-0 p-3"
+    style="z-index: 99999;"
+  >
+
+    <div
+      class="toast show"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+
+      <div class="toast-header">
+
+        
+        <strong class="me-auto">
+          {{ toastsTitolo() }}
+        </strong>
+
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="chiudiToast()">
+        </button>
+
+      </div>
+
+      <div class="toast-body">
+        {{ toastsMessaggio() }}
+      </div>
+
+    </div>
+
+  </div>
+
+}
+  

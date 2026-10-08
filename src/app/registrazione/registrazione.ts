@@ -32,6 +32,7 @@ export class Registrazione {
 
   messaggioError:string='';
 
+  
 
   registrati(): void {
     // Nome
@@ -70,7 +71,9 @@ export class Registrazione {
       next: (res) => {
         console.log('Registrazione effettuata:', res);
         this.auth.salvaAutenticazione(res.token, res.nome, res.idUtente);
+
         this.register.emit();
+
       },
 
       error: (err) => {

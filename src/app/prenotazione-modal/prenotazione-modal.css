@@ -1,0 +1,41 @@
+.modal-content {
+  background-color: #03e70e;
+  color: #000000;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Ombra morbida moderna */
+  padding: 24px;
+  overflow: hidden;
+}
+.modal-footer .btn-secondary {
+  width: 85px;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #000000;
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.modal-footer .btn-secondary:hover {
+  background-color: #333333;
+  transform: translateY(-3px);
+}
+.btn-prenota{
+  background-color:#5b4040;
+    width: 85px;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.btn-prenota:hover{
+  background-color: #494343;
+  transform: translateY(-3px);
+}
