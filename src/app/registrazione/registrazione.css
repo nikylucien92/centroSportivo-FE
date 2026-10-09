@@ -43,8 +43,7 @@
   font-family: 'Roboto';
   display: inline-block;
   color: #000000 !important;
-  margin-bottom: 20px !important;
-  font-weight: 400;
+
 }
 .modal-content {
   background-color: #03e70e;
@@ -52,7 +51,7 @@
   border: none;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Ombra morbida moderna */
-  padding: 24px;
+  padding: 10px;
   overflow: hidden;
 }
 .modal-header {
@@ -67,4 +66,11 @@
 }
 button{
   margin:5px;
+}
+.form-control{
+  
+  padding: 10px;
+}
+.mod-form button:hover{
+  transform: translateY(-3px);
 }

@@ -13,7 +13,6 @@ import { LoginRequest } from '../models/loginRequest';
 export class Login {
 
   private auth = inject(Auth);
-
   userLogin: LoginRequest = new LoginRequest();
   
   private emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -36,7 +35,7 @@ export class Login {
 accedi(): void {
 
   //Pulitura di eventuali messaggi di errore precedenti
-  this.msgError='';
+   this.msgError='';
 
 /*se per qualche motivo email fosse undefined 
 (es. prima che l'utente scriva qualcosa, a seconda
@@ -74,20 +73,12 @@ accedi(): void {
         this.auth.salvaAutenticazione(res.token, res.nome, res.idUtente);
         this.loginSuccess.emit();
       },
-
       error: (err) => {
-        //console.error('Errore durante il login:', err);
-       // this.msgError="EMAIL O PASSWORD NON CORRETTI";
-        //this.msgError = err?.error?.message || 'Email o password non corretti';
-       console.log('==============================');
-  console.log('ERRORE LOGIN FRONTEND');
-  console.log('STATUS:', err.status);
-  console.log('STATUS TEXT:', err.statusText);
-  console.log('ERROR:', err.error);
-  console.log('==============================');
-
-  this.msgError = 'EMAIL O PASSWORD NON CORRETTI';
-      
+        
+        this.msgError = '--Email o password non corretti';
+        console.log('ERRORE LOGIN FRONTEND');
+        console.log('STATUS:', err.status);
+       
       }
     });
   }
@@ -99,7 +90,6 @@ accedi(): void {
     }
 
     return this.emailRegex.test(this.userLogin.email.trim());
-    this.msgError = "EMAIL O PASSWORD NON CORRETTI";
   }
 
   validaPassword():boolean{
@@ -108,7 +98,6 @@ accedi(): void {
       return false;
     }
     return this.userLogin.password.length >5;
-        this.msgError = "EMAIL O PASSWORD NON CORRETTI";
 
   }
 

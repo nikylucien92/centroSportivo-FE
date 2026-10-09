@@ -1,38 +1,17 @@
-<div
-  class="modal fade show"
-  tabindex="-1"
-  aria-hidden="false"
-  style="display: block"
->
-
+<div class="modal fade show" tabindex="-1" aria-hidden="false" style="display: block">
   <div class="modal-dialog modal-dialog-centered">
-
     <div class="modal-content">
-
-
       <!-- HEADER -->
 
       <div class="modal-header">
+        <h1 class="modal-title fs-5">Prenota {{ sport }}</h1>
 
-        <h1 class="modal-title fs-5">
-
-          Prenota {{ sport }}
-
-        </h1>
-
-        <button
-          type="button"
-          class="btn-close"
-          (click)="chiudiModal()"
-        ></button>
-
+        <button type="button" class="btn-close" (click)="chiudiModal()"></button>
       </div>
-
 
       <!-- BODY -->
 
       <div class="modal-body">
-
         @if (messaggioErrore) {
           <div class="alert alert-danger" role="alert">
             {{ messaggioErrore }}
@@ -41,19 +20,15 @@
 
         @if (campo) {
           <p class="mb-3">
-            <strong>{{ campo.nome }}</strong> — {{ campo.prezzo | number:'1.2-2' }} € / ora
+            <strong>{{ campo.nome }}</strong> — {{ campo.prezzo | number: '1.2-2' }} € / ora
           </p>
         }
 
         <form #prenotazioneForm="ngForm">
-
           <!-- DATA -->
 
           <div class="mb-3">
-
-            <label class="form-label">
-              Data
-            </label>
+            <label class="form-label"> Data </label>
 
             <input
               type="date"
@@ -61,18 +36,14 @@
               name="dataSelezionata"
               [(ngModel)]="dataSelezionata"
               (ngModelChange)="onCambioData()"
+              [min]="dataMinima"
             />
-
           </div>
-
 
           <!-- ORARIO DISPONIBILE -->
 
           <div class="mb-3">
-
-            <label class="form-label">
-              Orario disponibile
-            </label>
+            <label class="form-label"> Orario disponibile </label>
 
             <select
               class="form-select"
@@ -96,17 +67,12 @@
                 </option>
               }
             </select>
-
           </div>
-
 
           <!-- NUMERO GIOCATORI -->
 
           <div class="mb-3">
-
-            <label class="form-label">
-              Numero giocatori
-            </label>
+            <label class="form-label"> Numero giocatori </label>
 
             <input
               type="number"
@@ -116,64 +82,40 @@
               [(ngModel)]="numeroGiocatori"
               (ngModelChange)="calcoloPrezzoPersona()"
             />
-
           </div>
-
 
           <!-- COSTO TOTALE (di sola lettura: deriva dal prezzo del campo) -->
 
           <div class="mb-3">
-
-            <label class="form-label">
-              Costo totale
-            </label>
+            <label class="form-label"> Costo totale </label>
 
             <input
               type="text"
               class="form-control"
-              [value]="(costoTotale | number:'1.2-2') + ' €'"
+              [value]="(costoTotale | number: '1.2-2') + ' €'"
               readonly
             />
-
           </div>
-
 
           <!-- COSTO PERSONA -->
 
           <div class="mb-3">
-
-            <label class="form-label">
-              Costo per persona
-            </label>
+            <label class="form-label"> Costo per persona </label>
 
             <input
               type="text"
               class="form-control"
-              [value]="(costoPersona | number:'1.2-2') + ' €'"
+              [value]="(costoPersona | number: '1.2-2') + ' €'"
               readonly
             />
-
           </div>
-
         </form>
-
       </div>
-
 
       <!-- FOOTER -->
 
       <div class="modal-footer">
-
-        <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="chiudiModal()"
-        >
-
-          Chiudi
-
-        </button>
-
+        <button type="button" class="btn btn-secondary" (click)="chiudiModal()">Chiudi</button>
 
         <button
           type="button"
@@ -181,19 +123,13 @@
           [disabled]="invioInCorso || disponibilitaCampoId === null"
           (click)="prenota()"
         >
-
           @if (invioInCorso) {
             Prenotazione in corso...
           } @else {
             Prenota
           }
-
         </button>
-
       </div>
-
     </div>
-
   </div>
-
 </div>

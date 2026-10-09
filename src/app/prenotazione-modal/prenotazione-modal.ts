@@ -3,10 +3,14 @@ import { DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { Auth } from '../services/auth';
-import { CampoService} from '../services/campoService';
-import { DisponibilitaCampoService} from '../services/disponibilitaCampo';
-import { PrenotazioneService} from '../services/prenotazioneService';
-import { PrenotazioneDto,CampoDto,DisponibilitaCampoDto } from '../models/prenotazioneRequest.model';
+import { CampoService } from '../services/campoService';
+import { DisponibilitaCampoService } from '../services/disponibilitaCampo';
+import { PrenotazioneService } from '../services/prenotazioneService';
+import {
+  PrenotazioneDto,
+  CampoDto,
+  DisponibilitaCampoDto,
+} from '../models/prenotazioneRequest.model';
 
 @Component({
   selector: 'app-prenotazione-modal',
@@ -31,10 +35,6 @@ export class PrenotazioneModal implements OnInit {
   @Output()
   prenotazioneCompletata = new EventEmitter<void>();
 
-  // =====================================================
-  // STATO
-  // =====================================================
-
   campo: CampoDto | null = null;
   slotDisponibili: DisponibilitaCampoDto[] = [];
 
@@ -51,17 +51,25 @@ export class PrenotazioneModal implements OnInit {
   invioInCorso = false;
   messaggioErrore: string = '';
 
-  // =====================================================
-  // CICLO DI VITA
-  // =====================================================
-
   ngOnInit(): void {
     this.caricaCampoEDisponibilita();
   }
 
-  // =====================================================
+
+  //toISOString() utilizza UTC. Per evitare problemi di fuso orario, soprattutto in Italia
+  dataMinima: string = new Date().toISOString().split('T')[0];
+
+  private getDataOdierna(): string {
+    const today = new Date();
+
+    const anno = today.getFullYear();
+    const mese = String(today.getMonth() + 1).padStart(2, '0');
+    const giorno = String(today.getDate()).padStart(2, '0');
+
+    return `${anno}-${mese}-${giorno}`;
+  }
+
   // CARICAMENTO CAMPO + SLOT DISPONIBILI
-  // =====================================================
 
   caricaCampoEDisponibilita(): void {
     this.messaggioErrore = '';
@@ -97,21 +105,17 @@ export class PrenotazioneModal implements OnInit {
 
     this.caricamento = true;
 
-    this.disponibilitaCampoService
-      .getByCampoEData(this.campo.id, this.dataSelezionata)
-      .subscribe({
-        next: (slot) => {
-          // Mostriamo solo gli slot ancora liberi
-          this.slotDisponibili = slot.filter(
-            (s) => s.statoDisponibilita === 'DISPONIBILE'
-          );
-          this.caricamento = false;
-        },
-        error: () => {
-          this.messaggioErrore = 'Errore nel caricamento degli orari disponibili';
-          this.caricamento = false;
-        },
-      });
+    this.disponibilitaCampoService.getByCampoEData(this.campo.id, this.dataSelezionata).subscribe({
+      next: (slot) => {
+        // Mostriamo solo gli slot ancora liberi
+        this.slotDisponibili = slot.filter((s) => s.statoDisponibilita === 'DISPONIBILE');
+        this.caricamento = false;
+      },
+      error: () => {
+        this.messaggioErrore = 'Errore nel caricamento degli orari disponibili';
+        this.caricamento = false;
+      },
+    });
   }
 
   // Richiamato quando l'utente cambia la data nel form
@@ -119,11 +123,8 @@ export class PrenotazioneModal implements OnInit {
     this.caricaSlot();
   }
 
-  // =====================================================
   // CALCOLO COSTO PER PERSONA (solo per anteprima:
   // il valore definitivo arriva dal backend dopo il salvataggio)
-  // =====================================================
-
   calcoloPrezzoPersona(): void {
     if (this.numeroGiocatori > 0 && this.costoTotale > 0) {
       this.costoPersona = this.costoTotale / this.numeroGiocatori;
@@ -132,9 +133,7 @@ export class PrenotazioneModal implements OnInit {
     }
   }
 
-  // =====================================================
   // FORMATTAZIONE ORARIO SLOT PER LA SELECT
-  // =====================================================
 
   formattaOrario(slot: DisponibilitaCampoDto): string {
     const inizio = new Date(slot.oraInizio);
@@ -146,9 +145,7 @@ export class PrenotazioneModal implements OnInit {
     return `${formato(inizio)} - ${formato(fine)}`;
   }
 
-  // =====================================================
   // INVIO PRENOTAZIONE
-  // =====================================================
 
   prenota(): void {
     this.messaggioErrore = '';
@@ -183,19 +180,16 @@ export class PrenotazioneModal implements OnInit {
 
     this.invioInCorso = true;
 
-    this.prenotazioneService
-      .effettuaPrenotazione(nuovaPrenotazione, idUtente)
-      .subscribe({
-        next: () => {
-          this.invioInCorso = false;
-          this.prenotazioneCompletata.emit();
-        },
-        error: (err) => {
-          this.invioInCorso = false;
-          this.messaggioErrore =
-            err?.error?.message || 'Errore durante la prenotazione, riprova';
-        },
-      });
+    this.prenotazioneService.effettuaPrenotazione(nuovaPrenotazione, idUtente).subscribe({
+      next: () => {
+        this.invioInCorso = false;
+        this.prenotazioneCompletata.emit();
+      },
+      error: (err) => {
+        this.invioInCorso = false;
+        this.messaggioErrore = err?.error?.message || 'Errore durante la prenotazione, riprova';
+      },
+    });
   }
 
   chiudiModal(): void {

@@ -36,7 +36,6 @@ export class Registrazione {
 
   registrati(): void {
     // Nome
-    this.messaggioError='';
 
 
     if (!this.validaNome()) {
@@ -78,7 +77,7 @@ export class Registrazione {
 
       error: (err) => {
         console.error('Errore durante la registrazione:', err);
-        this.messaggioError = 'Errore durante la registrazione';  
+        this.messaggioError = 'Errore ,email già presente , prova con un altra';  
       },
     });
   }

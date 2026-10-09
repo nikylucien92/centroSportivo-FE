@@ -16,16 +16,18 @@
       <!-- BODY -->
 
       <div class="modal-body">
-        @if (messaggioError) {
+       
+        <!--qualsiasi campo obbligatorio senza valore verrà visualizzato come non valido al caricamento della pagina -->
+        <form class="needs-validation" #registerForm="ngForm" novalidate>
+           @if (messaggioError) {
           <div class="alert alert-danger" role="alert">
             {{ messaggioError }}
           </div>
         }
-        <!--qualsiasi campo obbligatorio senza valore verrà visualizzato come non valido al caricamento della pagina -->
-        <form class="needs-validation" #registerForm="ngForm" novalidate>
+        
           <div class="input-group has-validation">
-            <div class="col-12 mb-2">
-              <label for="nome" class="form-label"> Nome </label>
+            <div class="col-12 mb-3">
+              <label for="nome" class="form-label"> Nome * </label>
 
               <input
                 type="text"
@@ -49,8 +51,8 @@
           </div>
 
           <div class="input-group has-validation">
-            <div class="col-12 mb2">
-              <label for="cognome" class="form-label"> Cognome </label>
+            <div class="col-12 mb-3">
+              <label for="cognome" class="form-label"> Cognome *</label>
 
               <input
                 type="text"
@@ -73,8 +75,8 @@
           </div>
 
           <div class="input-group has-validation">
-            <div class="col-12 mb-2">
-              <label for="email" class="form-label"> Email </label>
+            <div class="col-12 mb-3">
+              <label for="email" class="form-label"> Email *</label>
 
               <input
                 type="email"
@@ -94,8 +96,8 @@
           </div>
 
           <div class="input-group has-validation">
-            <div class="col-12 mb-2">
-              <label for="telefono" class="form-label"> Telefono </label>
+            <div class="col-12 mb-3">
+              <label for="telefono" class="form-label"> Telefono *</label>
 
               <input
                 type="text"
@@ -114,8 +116,8 @@
             </div>
           </div>
               <div class="input-group has-validation">
-            <div class="col-12 mb-2">
-              <label for="password" class="form-label"> Password </label>
+            <div class="col-12 mb-3">
+              <label for="password" class="form-label"> Password *</label>
 
               <input
                 type="password"
