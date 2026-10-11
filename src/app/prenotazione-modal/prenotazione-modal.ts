@@ -53,6 +53,7 @@ export class PrenotazioneModal implements OnInit {
 
   ngOnInit(): void {
     this.caricaCampoEDisponibilita();
+    this.getDataOdierna();
   }
 
 

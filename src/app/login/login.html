@@ -1,27 +1,28 @@
-<div
-  class="login-form"
-  tabindex="-1"
-  aria-hidden="true"
->
+<div class="login-form" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
-
     <div class="modal-content">
 
       <div class="modal-header">
-        <h3 class="titolo">
-          Accedi
-        </h3>
+        <h3 class="titolo">Accedi</h3>
       </div>
 
-      <div class="modal-body">
-        
-        <form>
-              @if(msgError) {
-          <div class="alert alert-danger" role="alert">
-            {{ msgError }}
-          </div>
-        }
-      
+      <form #formLogin="ngForm" (ngSubmit)="accedi()">
+
+        <div class="modal-body">
+
+          @if (msgError()) {
+            <div
+              class="error-message"
+              role="alert"
+              aria-live="assertive">
+              <span class="error-icon">
+              <i class="bi bi-exclamation-circle-fill">i</i>
+            </span>
+            <span class="error-text">{{ msgError() }}</span>
+              
+            </div>
+          }
+
           <div class="mb-3">
             <label for="email" class="form-label">
               Email *
@@ -36,9 +37,11 @@
               [(ngModel)]="userLogin.email"
               #inputEmail="ngModel"
             />
+
             @if (inputEmail.touched && !validaEmail()) {
               <div class="text-danger mt-1">
-                Imposta un formato corretto per l'email es. esempio@dominio.com
+                Inserisci un formato email valido,
+                es. esempio@dominio.com
               </div>
             }
           </div>
@@ -57,36 +60,42 @@
               [(ngModel)]="userLogin.password"
               #inputPassword="ngModel"
             />
-            @if(inputPassword.touched && !validaPassword()) {
+
+            @if (inputPassword.touched && !validaPassword()) {
               <div class="text-danger mt-1">
-                Imposta un formato corretto per la password (minimo 6 caratteri)
+                La password deve contenere almeno 6 caratteri.
               </div>
-            } 
+            }
           </div>
 
-        </form>
+        </div>
 
-      </div>
+        <div class="modal-footer">
 
-      <div class="modal-footer">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="loading()"
+            >
 
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="accedi()"
-        >
-          Accedi
-        </button>
+            @if (loading()) {
+              Accesso in corso...
+            } @else {
+              Accedi
+            }
 
-        <button
-          type="button"
-          class="btn btn-link"
-          (click)="apriRegistrazione()"
-        >
-          Non hai un account? Registrati
-        </button>
+          </button>
 
-      </div>
+          <button
+            type="button"
+            class="btn btn-link"
+            (click)="apriRegistrazione()">
+            Non hai un account? Registrati
+          </button>
+
+        </div>
+
+      </form>
 
     </div>
   </div>

@@ -16,22 +16,26 @@
       <!-- BODY -->
 
       <div class="modal-body">
-       
-        <!--qualsiasi campo obbligatorio senza valore verrà visualizzato come non valido al caricamento della pagina -->
+        <!--qualsiasi campo obbligatorio senza valore verrà
+         visualizzato come non valido al caricamento della pagina -->
         <form class="needs-validation" #registerForm="ngForm" novalidate>
-           @if (messaggioError) {
-          <div class="alert alert-danger" role="alert">
-            {{ messaggioError }}
-          </div>
-        }
-        
+          
+          @if (messaggioError()) {
+            <div class="error-message" role="alert" aria-live="assertive">
+              <span class="error-icon">
+                <i class="bi bi-exclamation-circle-fill">i</i>
+              </span>
+              <span class="error-text"> {{ messaggioError() }}</span>
+            </div>
+          }
+
           <div class="input-group has-validation">
             <div class="col-12 mb-3">
               <label for="nome" class="form-label"> Nome * </label>
 
               <input
                 type="text"
-                class="form-control "
+                class="form-control"
                 name="nome"
                 placeholder="Inserisci il nome"
                 [(ngModel)]="user.nome"
@@ -39,7 +43,6 @@
                 required
                 id="nome"
                 [class.is-invalid]="nomeInput.touched && !validaNome()"
-
               />
 
               @if (nomeInput.touched && !validaNome()) {
@@ -115,7 +118,7 @@
               }
             </div>
           </div>
-              <div class="input-group has-validation">
+          <div class="input-group has-validation">
             <div class="col-12 mb-3">
               <label for="password" class="form-label"> Password *</label>
 

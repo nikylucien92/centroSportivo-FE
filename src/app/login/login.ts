@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject} from '@angular/core';
+import { Component, EventEmitter, Output, inject,signal} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Auth } from '../services/auth';
 import { LoginRequest } from '../models/loginRequest';
@@ -16,18 +16,18 @@ export class Login {
   userLogin: LoginRequest = new LoginRequest();
   
   private emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  msgError:string = "";
-
+  
+   msgError = signal('');
+  loading = signal(false);
 
    @Output()
   loginSuccess = new EventEmitter<void>();
-
-  // APRI REGISTRAZIONE
   @Output()
   registrazione = new EventEmitter<void>();
 
  
- apriRegistrazione(): void {
+ apriRegistrazione(): void  {
+    this.msgError.set('');
     this.registrazione.emit();
   }  
 
@@ -35,32 +35,32 @@ export class Login {
 accedi(): void {
 
   //Pulitura di eventuali messaggi di errore precedenti
-   this.msgError='';
+   this.msgError.set('');
 
-/*se per qualche motivo email fosse undefined 
-(es. prima che l'utente scriva qualcosa, a seconda
- di come inizializzi LoginRequest), questo va in crash prima
-  ancora di arrivare al controllo.
- Meglio this.userLogin.email?.trim() con optional chaining*/
+      //evito richieste duplicate ,esempios:quando l'utente clicca ripetutamente
+      //la richiesta , mentre è già incorso
+      if (this.loading()) {
+        return;
+      }
 
     if (!this.userLogin.email?.trim()) {
-      this.msgError = 'INSERISCI LA TUA EMAIL PER ACCEDERE ';
+      this.msgError.set('Inserisci la tua email per accedere');
       return;
     }
 
     if (!this.validaEmail()) {
-      this.msgError = 'Inserisci un formato email valido.';
+      this.msgError.set('Inserisci un formato email valido');
       return;
     }
 
 
     if (!this.userLogin.password) {
-      this.msgError = 'INSERISCI LA TUA PASSWORD PER ACCEDERE ';
+      this.msgError.set('Inserisci la tua password per accedere');
       return;
     }
 
     if (!this.validaPassword()) {
-      this.msgError = 'La password deve contenere almeno 6 caratteri.';
+      this.msgError.set('La password deve contenere almeno 6 caratteri');
       return;
     }
 
@@ -68,18 +68,36 @@ accedi(): void {
     // Chiamata al backend
     this.auth.login(this.userLogin).subscribe({
       next: (res) => {
+        
         console.log('Login effettuato con successo', res);
 
         this.auth.salvaAutenticazione(res.token, res.nome, res.idUtente);
+
+        //RICHIESTA TERMINATA DAL BACKEND , quindi il btn torna cliccabile
+        this.loading.set(false);
         this.loginSuccess.emit();
       },
       error: (err) => {
-        
-        this.msgError = '--Email o password non corretti';
-        console.log('ERRORE LOGIN FRONTEND');
-        console.log('STATUS:', err.status);
-       
+        console.error('HTTP status:', err.status);
+     
+        //oppure : this.msgError =err.error?.message;
+        //this.msgError =err.error?.message ?? 'Errore durante il login';
+
+        if(err.status===0)
+          {
+            this.msgError.set('Server non raggiungibile');
+          }
+          else {
+          this.msgError.set(
+            err.error?.message ||
+            err.error?.messaggio ||
+            (typeof err.error === 'string' ? err.error : '') ||
+            (err.status === 401 ? 'Credenziali non valide' : 'Errore durante il login')
+          );
+        }
+        this.loading.set(false);
       }
+      
     });
   }
 
@@ -97,7 +115,7 @@ accedi(): void {
     {
       return false;
     }
-    return this.userLogin.password.length >5;
+    return this.userLogin.password.length >6;
 
   }
 
