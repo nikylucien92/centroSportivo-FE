@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject,signal } from '@angular/core';
+import { Component, EventEmitter, Output, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RegisterRequest } from '../models/registerRequest.model';
 import { Auth } from '../services/auth';
@@ -14,16 +14,16 @@ export class Registrazione {
   private auth = inject(Auth);
 
   user: RegisterRequest = new RegisterRequest();
-  messaggioError= signal('');
-  loading= signal(false);
+  messaggioError = signal('');
+  loading = signal(false);
 
   @Output()
-  chiudi= new EventEmitter<void>();
+  chiudi = new EventEmitter<void>();
 
   @Output()
   register = new EventEmitter<void>();
-  
-  emit():void{
+
+  emit(): void {
     this.chiudi.emit();
   }
 
@@ -32,10 +32,18 @@ export class Registrazione {
   private passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
   private telefonoRegex = /^(?:(?:\+|00)39)?3\d{9}$/;
 
+  formValido(): boolean {
+    return (
+      this.validaNome() &&
+      this.validaCognome() &&
+      this.validaEmail() &&
+      this.validaTelefono() &&
+      this.validaPassword()
+    );
+  }
 
   registrati(): void {
-    // Nome
-
+    this.loading.set(true);
 
     if (!this.validaNome()) {
       return;
@@ -71,26 +79,24 @@ export class Registrazione {
         console.log('Registrazione effettuata:', res);
         this.auth.salvaAutenticazione(res.token, res.nome, res.idUtente);
 
+        this.loading.set(false);
         this.register.emit();
-
       },
 
       error: (err) => {
         console.error('Errore durante registrazione', err);
-   if(err.status===0)
-          {
-            this.messaggioError.set('Server non raggiungibile');
-          }
-          else {
+        if (err.status === 0) {
+          this.messaggioError.set('Server non raggiungibile');
+        } else {
           this.messaggioError.set(
             err.error?.message ||
-            err.error?.messaggio ||
-            (typeof err.error === 'string' ? err.error : '') ||
-            (err.status === 401 ? 'Credenziali non valide' : 'Errore durante la registrazione')
+              err.error?.messaggio ||
+              (typeof err.error === 'string' ? err.error : '') ||
+              (err.status === 401 ? 'Credenziali non valide' : 'Errore durante la registrazione'),
           );
         }
-        this.loading.set(false); 
-       },
+        this.loading.set(false);
+      },
     });
   }
 
@@ -133,5 +139,3 @@ export class Registrazione {
     return this.telefonoRegex.test(this.user.telefono.trim());
   }
 }
-
-

@@ -19,7 +19,6 @@
         <!--qualsiasi campo obbligatorio senza valore verrà
          visualizzato come non valido al caricamento della pagina -->
         <form class="needs-validation" #registerForm="ngForm" novalidate>
-          
           @if (messaggioError()) {
             <div class="error-message" role="alert" aria-live="assertive">
               <span class="error-icon">
@@ -146,7 +145,14 @@
       <!-- FOOTER -->
 
       <div class="mod-form">
-        <button type="button" class="btn-registrati" (click)="registrati()">Registrati</button>
+        <button
+          type="button"
+          class="btn-registrati"
+          [disabled]="!formValido() || loading()"
+          (click)="registrati()"
+        >
+          {{ loading() ? 'Registrazione in corso...' : 'Registrati' }}
+        </button>
         <button type="button" class="btn-chiudi" (click)="emit()">Chiudi</button>
       </div>
     </div>

@@ -12,7 +12,6 @@
   padding: 8px;
   border-radius: 8px;
   background-color: #000000;
-  border: none;
   color: #ffffff;
   font-weight: 600;
   font-size: 1rem;
@@ -28,7 +27,6 @@
     width: 85px;
   padding: 8px;
   border-radius: 8px;
-  border: none;
   color: #ffffff;
   font-weight: 600;
   font-size: 1rem;
@@ -38,4 +36,19 @@
 .btn-prenota:hover{
   background-color: #494343;
   transform: translateY(-3px);
+}
+
+.modal-title{
+   font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+}
+.form-label{
+  font-weight: 600 !important;
+  font-size: 0.95rem;
+  font-family: 'Roboto';
+  display: inline-block;
+  color: #000000 !important;
 }

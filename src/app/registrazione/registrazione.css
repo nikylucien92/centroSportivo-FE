@@ -109,3 +109,9 @@ button{
   box-shadow: 0 4px 12px rgba(225, 29, 72, 0.08);
   animation: errorAppear 0.25s ease-out;
 }
+.btn-registrati:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(40%);
+  box-shadow: none;
+}
