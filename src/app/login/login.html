@@ -6,7 +6,7 @@
         <h3 class="titolo">Accedi</h3>
       </div>
 
-      <form #formLogin="ngForm" (ngSubmit)="accedi()">
+      <form class="needs-validation" #formLogin="ngForm" (ngSubmit)="accedi()">
 
         <div class="modal-body">
 
@@ -74,8 +74,8 @@
 
           <button
             type="submit"
-            class="btn btn-primary"
-            [disabled]="loading()"
+            class="btn-login"
+            [disabled]="loading() || !validaLogin()"
             >
 
             @if (loading()) {

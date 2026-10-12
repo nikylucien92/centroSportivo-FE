@@ -90,10 +90,8 @@ button{
   display: flex;
   align-items: center;
   gap: 10px;
-
   padding: 12px 16px;
   margin-top: 16px;
-
   background: linear-gradient(
     135deg,
     #fff1f2,
@@ -109,6 +107,7 @@ button{
   box-shadow: 0 4px 12px rgba(225, 29, 72, 0.08);
   animation: errorAppear 0.25s ease-out;
 }
+
 .btn-registrati:disabled {
   opacity: 0.5;
   cursor: not-allowed;

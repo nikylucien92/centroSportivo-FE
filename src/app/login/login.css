@@ -40,15 +40,13 @@
 
 /* Footer e Bottoni */
 .modal-footer {
-  border-top: none;
-  padding: 8px 0 0 0;
   display: flex;
   flex-direction: column; /* Dispone i bottoni in verticale per maggiore pulizia */
   gap: 12px; /* Spazio tra i bottoni */
 }
 
 /* Bottone di Accesso (Primary) */
-.modal-footer .btn-primary {
+.modal-footer .btn-login {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
@@ -57,17 +55,22 @@
   color: #ffffff;
   font-weight: 600;
   font-size: 1rem;
-  cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-.modal-footer .btn-primary:hover {
-  background-color: #222222;
+.btn-login:hover {
   transform: translateY(-3px);
 }
 
-.modal-footer .btn-primary:active {
+.modal-footer .btn-login:active {
   transform: scale(0.98);
+
+
+}
+.modal-footer .btn-login:disabled{
+    opacity: 0.5;
+    cursor: not-allowed !important;
+
 }
 
 /* Bottone Registrazione (Link) */

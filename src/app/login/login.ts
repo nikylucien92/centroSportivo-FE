@@ -32,10 +32,18 @@ export class Login {
   }  
 
 
+  validaLogin() : boolean{
+    return  (
+      this.validaEmail() && 
+      this.validaPassword()
+    );
+  }
+
 accedi(): void {
 
   //Pulitura di eventuali messaggi di errore precedenti
    this.msgError.set('');
+   this.loading.set(false);
 
       //evito richieste duplicate ,esempios:quando l'utente clicca ripetutamente
       //la richiesta , mentre è già incorso
@@ -70,7 +78,6 @@ accedi(): void {
       next: (res) => {
         
         console.log('Login effettuato con successo', res);
-
         this.auth.salvaAutenticazione(res.token, res.nome, res.idUtente);
 
         //RICHIESTA TERMINATA DAL BACKEND , quindi il btn torna cliccabile
@@ -101,7 +108,7 @@ accedi(): void {
     });
   }
 
-  
+
   validaEmail(): boolean {
     if (!this.userLogin.email) {
       return false;
