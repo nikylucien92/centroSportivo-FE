@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -11,6 +11,7 @@ import {
   CampoDto,
   DisponibilitaCampoDto,
 } from '../models/prenotazioneRequest.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-prenotazione-modal',
@@ -19,7 +20,7 @@ import {
   templateUrl: './prenotazione-modal.html',
   styleUrl: './prenotazione-modal.css',
 })
-export class PrenotazioneModal implements OnInit {
+export class PrenotazioneModal implements OnInit, OnDestroy {
   private auth = inject(Auth);
   private campoService = inject(CampoService);
   private disponibilitaCampoService = inject(DisponibilitaCampoService);
@@ -39,26 +40,33 @@ export class PrenotazioneModal implements OnInit {
   slotDisponibili: DisponibilitaCampoDto[] = [];
 
   // Data selezionata, formato YYYY-MM-DD (default: oggi)
-  dataSelezionata: string = new Date().toISOString().substring(0, 10);
-
+  dataSelezionata: string = this.getDataOdierna();
+  dataMinima: string = this.getDataOdierna();
   disponibilitaCampoId: number | null = null;
   numeroGiocatori: number = 1;
+  private slotSubscription?: Subscription;
+  private sseSubscription?: Subscription;
+  caricamento = false;
+  invioInCorso = false;
+  messaggioErrore = '';
 
   costoTotale: number = 0;
   costoPersona: number = 0;
 
-  caricamento = false;
-  invioInCorso = false;
-  messaggioErrore: string = '';
-
   ngOnInit(): void {
     this.caricaCampoEDisponibilita();
-    this.getDataOdierna();
+
+    // Ascolta in tempo reale i cambi di disponibilità (es. un altro
+    // utente che prenota/cancella mentre questa modale è aperta) e,
+    // se riguardano il campo e la data che si sta guardando ora,
+    // ricarica la lista degli slot
   }
-
-
-  //toISOString() utilizza UTC. Per evitare problemi di fuso orario, soprattutto in Italia
-  dataMinima: string = new Date().toISOString().split('T')[0];
+  ngOnDestroy(): void {
+    //Così chiudi anche la sottoscrizione usata
+    // per caricare gli slot quando la modal viene distrutta.
+    this.slotSubscription?.unsubscribe();
+    this.sseSubscription?.unsubscribe();
+  }
 
   private getDataOdierna(): string {
     const today = new Date();
@@ -99,28 +107,58 @@ export class PrenotazioneModal implements OnInit {
     });
   }
 
+  //2 utenti hanno la stessa modale aperta sullo stesso slot. Prima che vinca la richiesta POST /prenotazione (col lock pessimistico), l’altro
+  //  utente nel frattempo vede sparire quello slot dalla tendina in tempo reale, invece di scoprirlo solo al momento del click su “Prenota” con un errore secco dal backend.
+  
   caricaSlot(): void {
-    if (!this.campo) {
+    if (!this.dataSelezionata || !this.campo) {
       return;
     }
 
-    this.caricamento = true;
+  // Annulla l'eventuale richiesta precedente??
+  this.slotSubscription?.unsubscribe();
 
-    this.disponibilitaCampoService.getByCampoEData(this.campo.id, this.dataSelezionata).subscribe({
+  // Reset della selezione e della lista
+  this.slotDisponibili = [];
+  this.disponibilitaCampoId = null;
+  this.messaggioErrore = '';
+  this.caricamento = true;
+
+  this.slotSubscription = this.disponibilitaCampoService
+    .getByCampoEData(this.campo.id, this.dataSelezionata)
+    .subscribe({
       next: (slot) => {
-        // Mostriamo solo gli slot ancora liberi
-        this.slotDisponibili = slot.filter((s) => s.statoDisponibilita === 'DISPONIBILE');
+        this.slotDisponibili = slot.filter(
+          s => s.statoDisponibilita === 'DISPONIBILE'
+          
+        );
         this.caricamento = false;
+
+        console.log('Slot disponibili:', this.slotDisponibili);
       },
-      error: () => {
-        this.messaggioErrore = 'Errore nel caricamento degli orari disponibili';
+
+      error: (err) => {
+        console.error('Errore caricamento slot:', err);
+
+        this.slotDisponibili = [];
+        this.disponibilitaCampoId = null;
+        this.messaggioErrore =
+          'Errore nel caricamento degli orari disponibili';
+
         this.caricamento = false;
-      },
+      }
     });
-  }
+}
+
 
   // Richiamato quando l'utente cambia la data nel form
   onCambioData(): void {
+    this.disponibilitaCampoId = null;
+    this.slotDisponibili = [];
+    this.messaggioErrore = '';
+    if (!this.dataSelezionata || !this.campo) {
+      return;
+    }
     this.caricaSlot();
   }
 
@@ -136,21 +174,29 @@ export class PrenotazioneModal implements OnInit {
 
   // FORMATTAZIONE ORARIO SLOT PER LA SELECT
 
-  formattaOrario(slot: DisponibilitaCampoDto): string {
-    const inizio = new Date(slot.oraInizio);
-    const fine = new Date(slot.oraFine);
+  
+formattaOrario(slot: DisponibilitaCampoDto): string {
+  const formatta = (valore: string): string => {
+    // Supporta HH:mm, HH:mm:ss e date ISO con orario
+    const match = valore.match(/(?:T)?(\d{2}):(\d{2})/);
 
-    const formato = (d: Date) =>
-      d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+    if (match) {
+      return `${match[1]}:${match[2]}`;
+    }
 
-    return `${formato(inizio)} - ${formato(fine)}`;
-  }
+    return valore;
+  };
+
+  return `${formatta(slot.oraInizio)} - ${formatta(slot.oraFine)}`;
+}
+
 
   // INVIO PRENOTAZIONE
 
   prenota(): void {
     this.messaggioErrore = '';
 
+    //Controlla se l'utente che sta prenotando , è autenticato o meno
     if (!this.auth.isLoggedIn()) {
       this.messaggioErrore = 'Devi essere loggato per prenotare';
       return;
@@ -179,7 +225,6 @@ export class PrenotazioneModal implements OnInit {
       disponibilitaCampo: { id: this.disponibilitaCampoId },
     };
 
-    this.invioInCorso = true;
 
     this.prenotazioneService.effettuaPrenotazione(nuovaPrenotazione, idUtente).subscribe({
       next: () => {

@@ -14,9 +14,10 @@ export class Cards {
   sportSelezionato = '';
 
   apriPrenotazione(sport: string): void {
+   
     this.sportSelezionato = sport;
-
     this.mostraPrenotazione = true;
+     console.log("selezionto la card" , sport);
   }
 
   chiudiPrenotazione(): void {

@@ -36,3 +36,9 @@ export interface CampoDto {
   prezzo: number;
   coperto: boolean;
 }
+
+// Corrisponde a it.event.DisponibilitaEvent lato backend
+export interface DisponibilitaEvent {
+  idCampo: number;
+  data: string; // LocalDate -> "YYYY-MM-DD"
+}

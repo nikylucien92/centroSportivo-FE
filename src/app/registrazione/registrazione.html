@@ -139,15 +139,15 @@
               }
             </div>
           </div>
-          <div class="mod-form">
+          <div class="mod-footer">
             <button
               type="submit"
-              class="btn-registrati"
+              class="btn btn-primary w-100"
               [disabled]="!formValido() || loading()"
             >
               {{ loading() ? 'Registrazione in corso...' : 'Registrati' }}
             </button>
-            <button type="button" class="btn-chiudi" (click)="emit()">Chiudi</button>
+            <button type="button" class="btn btn-danger  w-100 mt-2 " (click)="emit()">Chiudi</button>
           </div>
         </form>
       </div>

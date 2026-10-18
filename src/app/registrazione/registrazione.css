@@ -1,41 +1,4 @@
-.btn-registrati{
-      width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  background-color: #000000;
-  border: none;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-.btn-registrati:hover {
-  background-color: #222222;
-}
-.btn-chiudi{
-          width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  background-color: #5b4040;
-  border: none;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-.btn-chiudi:hover{
-      background-color: #e7e4e4;
-    color:#5b4040;
-}
 
-.modal-title{
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-}
 /* Etichette degli input */
 .form-label {
   font-weight: 600 !important;
@@ -64,16 +27,11 @@
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
 }
-button{
-  margin:5px;
-}
+
 .form-control{
-  
   padding: 10px;
 }
-.mod-form button:hover{
-  transform: translateY(-3px);
-}
+
 .error-icon {
   display: flex;
   align-items: center;
@@ -106,11 +64,4 @@ button{
   line-height: 1.5;
   box-shadow: 0 4px 12px rgba(225, 29, 72, 0.08);
   animation: errorAppear 0.25s ease-out;
-}
-
-.btn-registrati:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  filter: grayscale(40%);
-  box-shadow: none;
 }
