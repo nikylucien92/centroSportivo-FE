@@ -41,6 +41,8 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
 
   // Data selezionata, formato YYYY-MM-DD (default: oggi)
   dataSelezionata: string = this.getDataOdierna();
+  dataMinima:string=this.getDataOdierna();
+  
   disponibilitaCampoId: number | null = null;
   numeroGiocatori: number = 1;
   private slotSubscription?: Subscription;
