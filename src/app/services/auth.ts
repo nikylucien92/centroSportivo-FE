@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable,Subject} from 'rxjs';
 
 import { RegisterRequest } from '../models/registerRequest.model';
 import { LoginRequest } from '../models/loginRequest';
@@ -17,20 +17,29 @@ export class Auth {
   private httpClient = inject(HttpClient);
 
 
-  // =====================================================
   // STATO UTENTE AUTENTICATO
   //crea uno stato condiviso dell'utente autenticato
 
-  private nomeUtenteSubject =new BehaviorSubject<string | null>(localStorage.getItem('nomeUtente')
-    );
+  private nomeUtenteSubject =new BehaviorSubject<string | null>(localStorage.getItem('nomeUtente'));
 
-  nomeUtente$ =
-    this.nomeUtenteSubject.asObservable();
+  // $ ?
+  nomeUtente$ =this.nomeUtenteSubject.asObservable();
+  
+    private notificaSubject=new Subject < {
+      titolo:string,
+      messaggio:string
+    }>();
+    
+    notifica$=this.notificaSubject.asObservable();
 
+    inviaNotifica(titolo:string,messaggio:string){
+      this.notificaSubject.next({
+        titolo,messaggio
+      })
+        
+    }
 
-  // =====================================================
   // REGISTRAZIONE
-  // =====================================================
 
   register(user: RegisterRequest): Observable<AuthResponse> {
 
@@ -41,10 +50,7 @@ export class Auth {
 
   }
 
-
-  // =====================================================
   // LOGIN
-  // =====================================================
 
   login(user: LoginRequest): Observable<AuthResponse> {
 
@@ -55,10 +61,19 @@ export class Auth {
 
   }
 
+  // LOGOUT
+  logout(): void {
 
-  // =====================================================
+    localStorage.removeItem('token');
+    localStorage.removeItem('nomeUtente');
+    localStorage.removeItem('idUtente');
+    
+    //La Home riceve null e imposta 
+    // autenticato = false, tornando alla schermata di login
+    this.nomeUtenteSubject.next(null);
+  }
+
   // CONTROLLO AUTENTICAZIONE
-  // =====================================================
 
   isLoggedIn(): boolean {
 
@@ -66,11 +81,8 @@ export class Auth {
 
   }
 
-
-  // =====================================================
   // SALVA AUTENTICAZIONE
-  // =====================================================
-
+  
   salvaAutenticazione(
     token: string,
     nomeUtente: string,
@@ -95,7 +107,6 @@ export class Auth {
 
   }
 
-
   // TOKEN E ID UTENTE
 
   getToken(): string | null {
@@ -109,20 +120,6 @@ export class Auth {
     const id = localStorage.getItem('idUtente');
 
     return id !== null ? Number(id) : null;
-
-  }
-
-
-  // LOGOUT
-  logout(): void {
-
-    localStorage.removeItem('token');
-
-    localStorage.removeItem('nomeUtente');
-
-    localStorage.removeItem('idUtente');
-
-    this.nomeUtenteSubject.next(null);
 
   }
 

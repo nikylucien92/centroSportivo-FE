@@ -42,16 +42,18 @@ export class Navbar implements OnInit {
     this.activeModal = 'none';
   }
 
+  // Colleghiamo le notifiche che avvengono nella navbar :login logout e registrazione
   loginCompletato(): void {
     this.activeModal = 'none';
-
     this.mostraDropdown = false;
+    this.auth.inviaNotifica('Login completato','Login effettuato con successo.');
   }
 
   registrazioneCompletata(): void {
     this.activeModal = 'none';
-
     this.mostraDropdown = false;
+  this.auth.inviaNotifica('Registrazione completata','Registrazione effettuata con successo.');
+  
   }
 
   apriDropdown(): void {
@@ -59,8 +61,9 @@ export class Navbar implements OnInit {
   }
 
   logout(): void {
+    this.auth.inviaNotifica('Logout completato','Hai efetuato la disconnessione');
     this.auth.logout();
-
     this.mostraDropdown = false;
+  
   }
 }
