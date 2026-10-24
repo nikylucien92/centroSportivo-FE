@@ -45,6 +45,8 @@ export class Navbar implements OnInit {
   // Colleghiamo le notifiche che avvengono nella navbar :login logout e registrazione
   loginCompletato(): void {
     this.activeModal = 'none';
+    
+    //Da rivedere mostraDropdown se viene utilizzato o meno
     this.mostraDropdown = false;
     this.auth.inviaNotifica('Login completato','Login effettuato con successo.');
   }
@@ -63,7 +65,6 @@ export class Navbar implements OnInit {
   logout(): void {
     this.auth.inviaNotifica('Logout completato','Hai efetuato la disconnessione');
     this.auth.logout();
-    this.mostraDropdown = false;
   
   }
 }

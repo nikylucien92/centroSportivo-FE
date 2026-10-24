@@ -20,6 +20,8 @@ export class Auth {
   // STATO UTENTE AUTENTICATO
   //crea uno stato condiviso dell'utente autenticato
 
+  
+  // cosa dichiara?
   private nomeUtenteSubject =new BehaviorSubject<string | null>(localStorage.getItem('nomeUtente'));
 
   // $ ?
@@ -67,7 +69,7 @@ export class Auth {
     localStorage.removeItem('token');
     localStorage.removeItem('nomeUtente');
     localStorage.removeItem('idUtente');
-    
+
     //La Home riceve null e imposta 
     // autenticato = false, tornando alla schermata di login
     this.nomeUtenteSubject.next(null);
