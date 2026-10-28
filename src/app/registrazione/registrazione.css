@@ -10,7 +10,7 @@
 }
 .modal-content {
   background-color: #03e70e;
- color: #000000;
+  color: #000000;
   border: none;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Ombra morbida moderna */

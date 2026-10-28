@@ -36,6 +36,9 @@ export class Home implements OnInit, OnDestroy {
     this.auth.nomeUtente$.subscribe((nome) => {
       this.nomeUtente = nome;
       this.autenticato = nome !== null;
+      if(nome=== null) {
+          this.schermataAuth='login';
+        }
     });
     
     // Riceve le notifiche inviate da altri componenti

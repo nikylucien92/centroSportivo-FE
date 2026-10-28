@@ -2,7 +2,8 @@
   background-color: #03e70e;
   color: #000000;
   border-radius: 16px;
-  padding: 24px;
+  padding: 10px;
+  overflow: hidden;
 }
 
 .modal-title{
@@ -17,4 +18,8 @@
   font-family: 'Roboto';
   display: inline-block;
   color: #000000 !important;
+}
+#titoloSport{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
 }

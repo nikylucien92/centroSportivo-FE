@@ -12,6 +12,7 @@ import {
   DisponibilitaCampoDto,
 } from '../models/prenotazioneRequest.model';
 import { Subscription } from 'rxjs';
+import { PrenotazioneForm } from '../models/PrenotazioneForm';
 
 @Component({
   selector: 'app-prenotazione-modal',
@@ -26,7 +27,7 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
   private disponibilitaCampoService = inject(DisponibilitaCampoService);
   private prenotazioneService = inject(PrenotazioneService);
 
-  // Tipologia del campo (es. "Padel", "Calcio a 5"), passata da cards.ts
+
   @Input()
   sport: string = '';
 
@@ -37,12 +38,14 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
   prenotazioneCompletata = new EventEmitter<void>();
 
   campo: CampoDto | null = null;
+  prenotazione: PrenotazioneForm = new PrenotazioneForm();
+
   slotDisponibili: DisponibilitaCampoDto[] = [];
 
   // Data selezionata, formato YYYY-MM-DD (default: oggi)
   dataSelezionata: string = this.getDataOdierna();
-  dataMinima:string=this.getDataOdierna();
-  
+  dataMinima: string = this.getDataOdierna();
+
   disponibilitaCampoId: number | null = null;
   numeroGiocatori: number = 1;
   private slotSubscription?: Subscription;
@@ -55,6 +58,7 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
   costoPersona: number = 0;
 
   ngOnInit(): void {
+    this.prenotazione.dataPrenotazione = this.getDataOdierna();
     this.caricaCampoEDisponibilita();
 
     // Ascolta in tempo reale i cambi di disponibilità (es. un altro
@@ -110,47 +114,42 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
 
   //2 utenti hanno la stessa modale aperta sullo stesso slot. Prima che vinca la richiesta POST /prenotazione (col lock pessimistico), l’altro
   //  utente nel frattempo vede sparire quello slot dalla tendina in tempo reale, invece di scoprirlo solo al momento del click su “Prenota” con un errore secco dal backend.
-  
+
   caricaSlot(): void {
     if (!this.dataSelezionata || !this.campo) {
       return;
     }
 
-  // Annulla l'eventuale richiesta precedente??
-  this.slotSubscription?.unsubscribe();
+    // Annulla l'eventuale richiesta precedente??
+    this.slotSubscription?.unsubscribe();
 
-  // Reset della selezione e della lista
-  this.slotDisponibili = [];
-  this.disponibilitaCampoId = null;
-  this.messaggioErrore = '';
-  this.caricamento = true;
+    // Reset della selezione e della lista
+    this.slotDisponibili = [];
+    this.disponibilitaCampoId = null;
+    this.messaggioErrore = '';
+    this.caricamento = true;
 
-  this.slotSubscription = this.disponibilitaCampoService
-    .getByCampoEData(this.campo.id, this.dataSelezionata)
-    .subscribe({
-      next: (slot) => {
-        this.slotDisponibili = slot.filter(
-          s => s.statoDisponibilita === 'DISPONIBILE'
-          
-        );
-        this.caricamento = false;
+    this.slotSubscription = this.disponibilitaCampoService
+      .getByCampoEData(this.campo.id, this.dataSelezionata)
+      .subscribe({
+        next: (slot) => {
+          this.slotDisponibili = slot.filter((s) => s.statoDisponibilita === 'DISPONIBILE');
+          this.caricamento = false;
 
-        console.log('Slot disponibili:', this.slotDisponibili);
-      },
+          console.log('Slot disponibili:', this.slotDisponibili);
+        },
 
-      error: (err) => {
-        console.error('Errore caricamento slot:', err);
+        error: (err) => {
+          console.error('Errore caricamento slot:', err);
 
-        this.slotDisponibili = [];
-        this.disponibilitaCampoId = null;
-        this.messaggioErrore =
-          'Errore nel caricamento degli orari disponibili';
+          this.slotDisponibili = [];
+          this.disponibilitaCampoId = null;
+          this.messaggioErrore = 'Errore nel caricamento degli orari disponibili';
 
-        this.caricamento = false;
-      }
-    });
-}
-
+          this.caricamento = false;
+        },
+      });
+  }
 
   // Richiamato quando l'utente cambia la data nel form
   onCambioData(): void {
@@ -175,28 +174,30 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
 
   // FORMATTAZIONE ORARIO SLOT PER LA SELECT
 
-  
-formattaOrario(slot: DisponibilitaCampoDto): string {
-  const formatta = (valore: string): string => {
-    // Supporta HH:mm, HH:mm:ss e date ISO con orario
-    const match = valore.match(/(?:T)?(\d{2}):(\d{2})/);
+  formattaOrario(slot: DisponibilitaCampoDto): string {
+    const formatta = (valore: string): string => {
+      // Supporta HH:mm, HH:mm:ss e date ISO con orario
+      const match = valore.match(/(?:T)?(\d{2}):(\d{2})/);
 
-    if (match) {
-      return `${match[1]}:${match[2]}`;
-    }
+      if (match) {
+        return `${match[1]}:${match[2]}`;
+      }
 
-    return valore;
-  };
+      return valore;
+    };
 
-  return `${formatta(slot.oraInizio)} - ${formatta(slot.oraFine)}`;
-}
-
+    return `${formatta(slot.oraInizio)} - ${formatta(slot.oraFine)}`;
+  }
 
   // INVIO PRENOTAZIONE
 
   prenota(): void {
     this.messaggioErrore = '';
 
+    if (this.prenotazione.dataPrenotazione < this.dataMinima) {
+      this.messaggioErrore = 'Non puoi prenotare in una data passata';
+      return;
+    }
     //Controlla se l'utente che sta prenotando , è autenticato o meno
     if (!this.auth.isLoggedIn()) {
       this.messaggioErrore = 'Devi essere loggato per prenotare';
@@ -225,7 +226,6 @@ formattaOrario(slot: DisponibilitaCampoDto): string {
       costoTotale: this.costoTotale,
       disponibilitaCampo: { id: this.disponibilitaCampoId },
     };
-
 
     this.prenotazioneService.effettuaPrenotazione(nuovaPrenotazione, idUtente).subscribe({
       next: () => {

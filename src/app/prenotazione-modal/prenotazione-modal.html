@@ -2,13 +2,12 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <!-- HEADER -->
-      <h1 class="modal-title">{{ sport }}</h1>
       <div class="d-flex justify-content-end">
         <button type="button" class="btn-close" (click)="chiudiModal()"></button>
       </div>
       <!-- BODY -->
 
-      <div class="modal-body">
+      <div class="modal-body pt-4">
         @if (messaggioErrore) {
           <div class="alert alert-danger" role="alert">
             {{ messaggioErrore }}
@@ -16,25 +15,32 @@
         }
 
         @if (campo) {
-          <p class="mb-3">
-            <strong>{{ campo.nome }}</strong> — {{ campo.prezzo | number: '1.2-2' }} € / ora
-          </p>
+          <div class="d-flex justify-content-center">
+            <h3 class="mb-3">
+              <strong id="titoloSport">{{ campo.nome }}</strong>
+            </h3>
+          </div>
         }
 
-        <form class="needs-validation" #prenotazioneForm="ngForm" (ngSubmit)="prenota()">
+        <form class="needs-validation" #prenotazioneForm="ngForm" (ngSubmit)="prenota()" novalidate>
           <!-- DATA -->
 
           <div class="mb-3">
             <label class="form-label"> Data* </label>
-
-            <input
-              type="date"
-              class="form-control"
-              name="dataSelezionata"
-              [(ngModel)]="dataSelezionata"
-              (ngModelChange)="onCambioData()"
-              [min]="dataMinima"
-            />
+              <input
+                type="date"
+                class="form-control"
+                name="dataSelezionata"
+              
+                [(ngModel)]="prenotazione.dataPrenotazione"
+                (ngModelChange)="onCambioData()"
+                [min]="dataMinima"
+                #dataInput="ngModel"
+                required
+              />
+              @if (dataInput.invalid && (dataInput.touched  || prenotazioneForm.submitted)) {
+                <div class="text-danger mt-1">Inserire una data</div>
+              }
           </div>
 
           <!-- ORARIO DISPONIBILE -->
@@ -43,11 +49,15 @@
             <label class="form-label"> Orario disponibile* </label>
 
             <select
+            required
+            id="disponibilitaCampoId"
               class="form-select"
               name="disponibilitaCampoId"
-              [(ngModel)]="disponibilitaCampoId"
+              [(ngModel)]="prenotazione.disponibilitaCampoId"
               [disabled]="caricamento || slotDisponibili.length === 0"
+              #disponbilitaCampoOrario="ngModel"
             >
+
               <option [ngValue]="null" disabled>
                 @if (caricamento) {
                   Caricamento in corso...
@@ -64,6 +74,10 @@
                 </option>
               }
             </select>
+            @if(disponbilitaCampoOrario.invalid && (disponbilitaCampoOrario.touched || prenotazioneForm.submitted))
+            {
+              <div class="text-danger mt-1">Selezionare un orario</div>
+            }
           </div>
 
           <!-- NUMERO GIOCATORI -->
@@ -72,13 +86,19 @@
             <label class="form-label"> Numero giocatori* </label>
 
             <input
+              id="numeroGiocatori"
               type="number"
               class="form-control"
               name="numeroGiocatori"
               min="1"
-              [(ngModel)]="numeroGiocatori"
+              [(ngModel)]="prenotazione.numeroGiocatori"
               (ngModelChange)="calcoloPrezzoPersona()"
+              #giocatoriCtrl="ngModel"
+              required
             />
+            @if (giocatoriCtrl.invalid && (giocatoriCtrl.touched || prenotazioneForm.submitted)) {
+              <div class="text-danger mt-1">Inserire almeno 1 giocatore</div>
+            }
           </div>
 
           <div class="mb-3">
@@ -119,7 +139,7 @@
               }
             </button>
 
-            <button type="button" class="btn btn-danger w-100 mt-2" (click)="chiudiModal()">
+            <button type="button" class="btn btn-danger w-100 mt-1" (click)="chiudiModal()">
               Chiudi
             </button>
           </div>

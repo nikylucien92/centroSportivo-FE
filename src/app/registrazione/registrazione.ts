@@ -49,26 +49,18 @@ export class Registrazione {
       return;
     }
 
-    // Cognome
-
     if (!this.validaCognome()) {
       return;
     }
-
-    // Email
 
     if (!this.validaEmail()) {
       return;
     }
 
-    // Password
 
     if (!this.validaPassword()) {
       return;
     }
-
-    // Telefono
-
     if (!this.validaTelefono()) {
       return;
     }
