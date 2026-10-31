@@ -21,9 +21,10 @@ export class Home implements OnInit, OnDestroy {
 
   mostraToasts = signal(false);
   toastsTitolo = signal('');
-  toastsMessaggio = signal('');
   private toastTimer?: ReturnType<typeof setTimeout>;
   private notificaSubscription?: Subscription;
+
+  tipoToast = signal<'login' | 'logout' | 'registrazione'>('login');
 
   constructor(private auth: Auth) {}
 
@@ -36,32 +37,30 @@ export class Home implements OnInit, OnDestroy {
     this.auth.nomeUtente$.subscribe((nome) => {
       this.nomeUtente = nome;
       this.autenticato = nome !== null;
-      if(nome=== null) {
-          this.schermataAuth='login';
-        }
+      if (nome === null) {
+        this.schermataAuth = 'login';
+      }
     });
-    
+
     // Riceve le notifiche inviate da altri componenti
-    this.notificaSubscription = this.auth.notifica$.subscribe(({ titolo, messaggio }) => {
-      this.mostraNotifica(titolo, messaggio);
+    this.notificaSubscription = this.auth.notifica$.subscribe(({ titolo, tipo }) => {
+      this.mostraNotifica(titolo, tipo);
     });
   }
   ngOnDestroy(): void {
     clearTimeout(this.toastTimer);
     this.notificaSubscription?.unsubscribe();
-
   }
 
-  mostraNotifica(titolo: string, messaggio: string): void {
+  mostraNotifica(titolo: string, tipo: 'login' | 'logout' | 'registrazione'): void {
     this.toastsTitolo.set(titolo);
-    this.toastsMessaggio.set(messaggio);
     this.mostraToasts.set(true);
+    this.tipoToast.set(tipo);
 
     clearTimeout(this.toastTimer);
 
     this.toastTimer = setTimeout(() => {
       console.log('toast partito');
-
       this.mostraToasts.set(false);
     }, 4000);
   }
@@ -79,17 +78,15 @@ export class Home implements OnInit, OnDestroy {
 
   loginCompletato(): void {
     this.autenticato = true;
-    this.auth.inviaNotifica('Login completato','Login effettuato con successo');
+    this.auth.inviaNotifica('Login completato', 'login');
   }
 
   registrazioneCompletata(): void {
-    this.auth.inviaNotifica('Registrazione completata','Registrazione effettuata con successo');
+    this.auth.inviaNotifica('Registrazione completata', 'registrazione');
   }
 
   chiudiToast(): void {
     clearTimeout(this.toastTimer);
     this.mostraToasts.set(false);
   }
-
-  
 }

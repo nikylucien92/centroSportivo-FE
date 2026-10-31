@@ -92,34 +92,34 @@
   >
 
     <div
-      class="toast show"
+      class="toast show align-items-center"
       role="alert"
       aria-live="assertive"
       aria-atomic="true"
+      [class.text-success]="tipoToast() === 'login' || tipoToast() === 'registrazione'"
+      [class.text-danger]="tipoToast() === 'logout'"
+
     >
 
-      <div class="toast-header">
+      <div class="d-flex">
 
-        
-        <strong class="me-auto">
+        <strong class="toast-body fw-semibold">
           {{ toastsTitolo() }}
         </strong>
 
         <button
           type="button"
-          class="btn-close"
+          class="btn-close ms-auto"
           aria-label="Close"
           (click)="chiudiToast()">
         </button>
 
       </div>
 
-      <div class="toast-body">
-        {{ toastsMessaggio() }}
-      </div>
-
     </div>
 
+
+    
   </div>
 
 }

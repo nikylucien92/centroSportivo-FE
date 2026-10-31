@@ -32,7 +32,7 @@
                 class="form-control"
                 name="dataSelezionata"
               
-                [(ngModel)]="prenotazione.dataPrenotazione"
+                [(ngModel)]="dataSelezionata"
                 (ngModelChange)="onCambioData()"
                 [min]="dataMinima"
                 #dataInput="ngModel"
@@ -53,7 +53,7 @@
             id="disponibilitaCampoId"
               class="form-select"
               name="disponibilitaCampoId"
-              [(ngModel)]="prenotazione.disponibilitaCampoId"
+              [(ngModel)]="disponibilitaCampoId"
               [disabled]="caricamento || slotDisponibili.length === 0"
               #disponbilitaCampoOrario="ngModel"
             >
@@ -90,14 +90,15 @@
               type="number"
               class="form-control"
               name="numeroGiocatori"
-              min="1"
-              [(ngModel)]="prenotazione.numeroGiocatori"
+              min="2"
+              step="1"
+              [(ngModel)]="numeroGiocatori"
               (ngModelChange)="calcoloPrezzoPersona()"
               #giocatoriCtrl="ngModel"
               required
             />
             @if (giocatoriCtrl.invalid && (giocatoriCtrl.touched || prenotazioneForm.submitted)) {
-              <div class="text-danger mt-1">Inserire almeno 1 giocatore</div>
+              <div class="text-danger mt-1">Inserire almeno 2 giocatori</div>
             }
           </div>
 
@@ -115,7 +116,7 @@
           <!-- COSTO PERSONA -->
 
           <div class="mb">
-            <label class="form-label"> Costo per persona </label>
+            <label class="form-label"> Quota a persona </label>
 
             <input
               type="text"
@@ -130,7 +131,7 @@
             <button
               type="submit"
               class="btn btn-primary w-100"
-              [disabled]="invioInCorso || disponibilitaCampoId === null"
+              [disabled]="invioInCorso"
             >
               @if (invioInCorso) {
                 Prenotazione in corso...

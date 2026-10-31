@@ -16,12 +16,6 @@ export class Auth {
 
   private httpClient = inject(HttpClient);
 
-
-  // STATO UTENTE AUTENTICATO
-  //crea uno stato condiviso dell'utente autenticato
-
-  
-  // cosa dichiara?
   private nomeUtenteSubject =new BehaviorSubject<string | null>(localStorage.getItem('nomeUtente'));
 
   // $ ?
@@ -29,14 +23,14 @@ export class Auth {
   
     private notificaSubject=new Subject < {
       titolo:string,
-      messaggio:string
+      tipo: 'login' | 'logout' | 'registrazione';
     }>();
     
     notifica$=this.notificaSubject.asObservable();
 
-    inviaNotifica(titolo:string,messaggio:string){
+    inviaNotifica(titolo:string,tipo:'login' | 'logout'| 'registrazione'){
       this.notificaSubject.next({
-        titolo,messaggio
+        titolo,tipo
       })
         
     }

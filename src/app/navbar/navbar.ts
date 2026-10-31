@@ -48,13 +48,15 @@ export class Navbar implements OnInit {
     
     //Da rivedere mostraDropdown se viene utilizzato o meno
     this.mostraDropdown = false;
-    this.auth.inviaNotifica('Login completato','Login effettuato con successo.');
+    this.auth.inviaNotifica('Login completato',
+    'login');
   }
 
   registrazioneCompletata(): void {
     this.activeModal = 'none';
     this.mostraDropdown = false;
-  this.auth.inviaNotifica('Registrazione completata','Registrazione effettuata con successo.');
+  this.auth.inviaNotifica('Registrazione completata',
+    'registrazione');
   
   }
 
@@ -63,7 +65,8 @@ export class Navbar implements OnInit {
   }
 
   logout(): void {
-    this.auth.inviaNotifica('Logout completato','Hai efetuato la disconnessione');
+    this.auth.inviaNotifica('Logout completato',
+    'logout');
     this.auth.logout();
   
   }

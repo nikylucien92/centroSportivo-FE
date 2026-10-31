@@ -194,7 +194,7 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
   prenota(): void {
     this.messaggioErrore = '';
 
-    if (this.prenotazione.dataPrenotazione < this.dataMinima) {
+    if (!this.dataSelezionata || this.dataSelezionata < this.dataMinima) {
       this.messaggioErrore = 'Non puoi prenotare in una data passata';
       return;
     }
@@ -216,10 +216,14 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.numeroGiocatori <= 0) {
-      this.messaggioErrore = 'Il numero di giocatori deve essere maggiore di 0';
+  if (!Number.isInteger(this.numeroGiocatori) || this.numeroGiocatori < 2) {
+      this.messaggioErrore = 'Il numero di giocatori deve essere maggiore di 1';
       return;
     }
+     // Evita invii multipli
+  if (this.invioInCorso) {
+    return;
+  }
 
     const nuovaPrenotazione: PrenotazioneDto = {
       numeroGiocatori: this.numeroGiocatori,
@@ -227,6 +231,7 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
       disponibilitaCampo: { id: this.disponibilitaCampoId },
     };
 
+    this.invioInCorso=true;
     this.prenotazioneService.effettuaPrenotazione(nuovaPrenotazione, idUtente).subscribe({
       next: () => {
         this.invioInCorso = false;
