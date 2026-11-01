@@ -12,12 +12,11 @@ export class CarouselMatch {
   @ViewChild('cardsWrapper')
 cardsWrapper!: ElementRef<HTMLDivElement>;
 
-scrollCards(): void {
-
+scrollCards(direction: 'avanti' | 'indietro' ='avanti'): void {
+  const offset=direction=== 'avanti' ? 322 : -322;
   this.cardsWrapper.nativeElement.scrollBy({
 
-    left: 322,
-
+    left: offset,
     behavior: 'smooth'
 
   });

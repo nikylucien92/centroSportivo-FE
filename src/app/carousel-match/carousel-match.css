@@ -240,11 +240,8 @@
 .location {
 
   margin: 0 0 8px;
-
   color: #909ba3;
-
   font-size: 14px;
-
   font-weight: 400;
 
 }
@@ -318,33 +315,19 @@
 .carousel-next {
 
   position: absolute;
-
-  right: 52px;
-
   top: 50%;
-
   transform: translateY(-50%);
-
-  width: 48px;
-
-  height: 48px;
-
+  width: 60px;
+  right:10%;
+  height: 60px;
   border: none;
-
   border-radius: 50%;
-
   background-color: #07516c;
-
   color: #ffffff;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   cursor: pointer;
-
   z-index: 10;
 
   transition:
@@ -352,17 +335,26 @@
     transform 0.2s ease;
 
 }
+.carousel-prev{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  left:10%;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  background-color: #07516c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
 
-
-.carousel-next span {
-
-  font-size: 34px;
-
-  font-weight: 300;
-
-  line-height: 1;
-
-  margin-top: -4px;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 
 }
 
@@ -398,6 +390,7 @@
 
   }
 
+  
 }
 
 
@@ -426,9 +419,11 @@
   }
 
   .carousel-next {
-
     right: 15px;
+  }
 
+  .carousel-prev{
+    right:15px;
   }
 
 }

@@ -2,17 +2,18 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <!-- HEADER -->
-      <div class="d-flex justify-content-end">
-        <button type="button" class="btn-close" (click)="chiudiModal()"></button>
-      </div>
+    
       <!-- BODY -->
 
-      <div class="modal-body pt-4">
+      <div class="modal-body border-0 position-relative justify-content-center">
+      <button type="button" class="btn-close position-absolute end-0 me-3" (click)="chiudiModal()"></button>
+
         @if (messaggioErrore) {
           <div class="alert alert-danger" role="alert">
             {{ messaggioErrore }}
           </div>
         }
+
 
         @if (campo) {
           <div class="d-flex justify-content-center">

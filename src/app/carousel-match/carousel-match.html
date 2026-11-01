@@ -1,20 +1,15 @@
 <section class="featured-section">
 
-  <!-- HEADER -->
   <div class="featured-title">
      <h2>Entra nella mischia</h2>
   <h1>Vedi a chi manca una persona ! </h1>
 
      </div>
 
-  <!-- CAROUSEL -->
-  <div class="carousel-container">
-    <!-- CONTENITORE SCORRIMENTO -->
+  <div class="carousel-slide " id="carouselCampi" data-bs-interval="false">
+      
     <div class="cards-wrapper " #cardsWrapper>
-      <!-- ============================== -->
-      <!-- CARD 1                         -->
-      <!-- ============================== -->
-
+   
       <div class="field-card">
         <div class="card-image">
           <img src="/img/Torneo_regionale_11.jpg" alt="Campo da calcio" loading="lazy" />
@@ -34,9 +29,6 @@
         </div>
       </div>
 
-      <!-- ============================== -->
-      <!-- CARD 2                         -->
-      <!-- ============================== -->
 
       <div class="field-card">
         <div class="card-image">
@@ -59,9 +51,6 @@
         </div>
       </div>
 
-      <!-- ============================== -->
-      <!-- CARD 3                         -->
-      <!-- ============================== -->
 
       <div class="field-card">
         <div class="card-image">
@@ -83,10 +72,7 @@
         </div>
       </div>
 
-      <!-- ============================== -->
-      <!-- CARD 4                         -->
-      <!-- ============================== -->
-
+ 
       <div class="field-card">
         <div class="card-image">
           <img src="/img/basket2.jpeg" alt="Campo da basket" loading="lazy" />
@@ -108,10 +94,7 @@
         </div>
       </div>
 
-      <!-- ============================== -->
-      <!-- CARD 5                         -->
-      <!-- ============================== -->
-
+   
       <div class="field-card">
         <div class="card-image">
           <img src="/img/campo3.jpeg" alt="Campo da futsal" loading="lazy" />
@@ -131,13 +114,12 @@
         </div>
       </div>
     </div>
-
-    <!-- ================================= -->
-    <!-- PULSANTE AVANTI                   -->
-    <!-- ================================= -->
-
-    <button type="button" class="carousel-next" (click)="scrollCards()" aria-label="Scorri i campi">
-      <span>›</span>
+  <button type="button" class="carousel-next" aria-label="Scorri i campi avanti" (click)="scrollCards('avanti')">
+      ⇨
     </button>
+    <button type="button" class="carousel-prev" aria-label="Scorri i campi indietro" (click)="scrollCards('indietro')">
+     ⇦
+    </button>
+    
   </div>
 </section>
