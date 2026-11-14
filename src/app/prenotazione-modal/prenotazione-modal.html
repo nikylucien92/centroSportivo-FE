@@ -2,46 +2,60 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <!-- HEADER -->
-    
+
       <!-- BODY -->
 
       <div class="modal-body border-0 position-relative justify-content-center">
-      <button type="button" class="btn-close position-absolute end-0 me-3" (click)="chiudiModal()"></button>
-
-        @if (messaggioErrore) {
-          <div class="alert alert-danger" role="alert">
-            {{ messaggioErrore }}
+        <div class="col-2">
+          <div class="row">
+            <button
+            type="button"
+            class="btn-close position-absolute end-0 me-3"
+            (click)="chiudiModal()"
+          ></button>
           </div>
-        }
+          
+        </div>
 
+        <div class="col-8 mx-auto">
+                    <div class="row">
+ @if (messaggioErrore) {
+            <div class="alert alert-danger" role="alert">
+              {{ messaggioErrore }}
+            </div>
+          }
 
-        @if (campo) {
-          <div class="d-flex justify-content-center">
-            <h3 class="mb-3">
-              <strong id="titoloSport">{{ campo.nome }}</strong>
-            </h3>
-          </div>
-        }
+        </div>
+        <div class="row">
+            @if (campo) {
+            <div class="d-flex justify-content-center">
+              <h3 class="mb-3">
+                <strong id="titoloSport">{{ campo.nome }}</strong>
+              </h3>
+            </div>
+          }
+        </div>
+         
+        </div>
 
         <form class="needs-validation" #prenotazioneForm="ngForm" (ngSubmit)="prenota()" novalidate>
           <!-- DATA -->
 
           <div class="mb-3">
             <label class="form-label"> Data* </label>
-              <input
-                type="date"
-                class="form-control"
-                name="dataSelezionata"
-              
-                [(ngModel)]="dataSelezionata"
-                (ngModelChange)="onCambioData()"
-                [min]="dataMinima"
-                #dataInput="ngModel"
-                required
-              />
-              @if (dataInput.invalid && (dataInput.touched  || prenotazioneForm.submitted)) {
-                <div class="text-danger mt-1">Inserire una data</div>
-              }
+            <input
+              type="date"
+              class="form-control"
+              name="dataSelezionata"
+              [(ngModel)]="dataSelezionata"
+              (ngModelChange)="onCambioData($event)"
+              [min]="dataMinima"
+              #dataInput="ngModel"
+              required
+            />
+            @if (dataInput.invalid && (dataInput.touched || prenotazioneForm.submitted)) {
+              <div class="text-danger mt-1">Inserire una data</div>
+            }
           </div>
 
           <!-- ORARIO DISPONIBILE -->
@@ -49,16 +63,17 @@
           <div class="mb-3">
             <label class="form-label"> Orario disponibile* </label>
 
+            <!--   [attr.disabled] scrive solo l attributo HTML disabled sull elemento select e non passa dal sistema dei form.
+         -->
             <select
-            required
-            id="disponibilitaCampoId"
+              required
+              id="disponibilitaCampoId"
               class="form-select"
               name="disponibilitaCampoId"
               [(ngModel)]="disponibilitaCampoId"
               [disabled]="caricamento || slotDisponibili.length === 0"
               #disponbilitaCampoOrario="ngModel"
             >
-
               <option [ngValue]="null" disabled>
                 @if (caricamento) {
                   Caricamento in corso...
@@ -75,8 +90,11 @@
                 </option>
               }
             </select>
-            @if(disponbilitaCampoOrario.invalid && (disponbilitaCampoOrario.touched || prenotazioneForm.submitted))
-            {
+
+            @if (
+              disponbilitaCampoOrario.invalid &&
+              (disponbilitaCampoOrario.touched || prenotazioneForm.submitted)
+            ) {
               <div class="text-danger mt-1">Selezionare un orario</div>
             }
           </div>
@@ -91,7 +109,7 @@
               type="number"
               class="form-control"
               name="numeroGiocatori"
-              min="2"
+              [min]="minGiocatori"
               step="1"
               [(ngModel)]="numeroGiocatori"
               (ngModelChange)="calcoloPrezzoPersona()"
@@ -99,8 +117,12 @@
               required
             />
             @if (giocatoriCtrl.invalid && (giocatoriCtrl.touched || prenotazioneForm.submitted)) {
-              <div class="text-danger mt-1">Inserire almeno 2 giocatori</div>
+              
+              <div class="text-danger mt-1">
+              Inserire almeno {{ minGiocatori }} giocatori.
+            </div>
             }
+            
           </div>
 
           <div class="mb-3">
@@ -129,11 +151,7 @@
           <!-- FOOTER -->
 
           <div class="d-grid gap-2 mt-3">
-            <button
-              type="submit"
-              class="btn btn-primary w-100"
-              [disabled]="invioInCorso"
-            >
+            <button type="submit" class="btn btn-primary w-100" [disabled]="invioInCorso">
               @if (invioInCorso) {
                 Prenotazione in corso...
               } @else {

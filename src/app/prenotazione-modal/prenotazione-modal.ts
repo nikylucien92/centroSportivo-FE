@@ -47,7 +47,8 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
   dataMinima: string = this.getDataOdierna();
 
   disponibilitaCampoId: number | null = null;
-  numeroGiocatori: number = 1;
+
+ 
   private slotSubscription?: Subscription;
   private sseSubscription?: Subscription;
   caricamento = false;
@@ -57,10 +58,24 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
   costoTotale: number = 0;
   costoPersona: number = 0;
 
+ // Numero di giocatori selezionato dall'utente (minimo: 2)
+  numeroGiocatori: number = 0;
+  minGiocatori: number = 0;
+
+  //readonly impedisce di riassegnare la mappa durante l'esecuzione.
+      private readonly minGiocatoriSport :Record<string,number>={
+      'Padel': 2,
+      'Tennis': 2,
+      'Calcio a 5': 10,
+      'Calcio a 11': 22,
+      'Basket': 10
+      }
+
   ngOnInit(): void {
     this.prenotazione.dataPrenotazione = this.getDataOdierna();
+       this.getMinGiocatori();
     this.caricaCampoEDisponibilita();
-
+    
     // Ascolta in tempo reale i cambi di disponibilità (es. un altro
     // utente che prenota/cancella mentre questa modale è aperta) e,
     // se riguardano il campo e la data che si sta guardando ora,
@@ -71,6 +86,14 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
     // per caricare gli slot quando la modal viene distrutta.
     this.slotSubscription?.unsubscribe();
     this.sseSubscription?.unsubscribe();
+  }
+
+  //se lo sport non è presente nella 
+  // mappa oppure il valore è null o undefined, viene utilizzato il valore predefinito 2
+  public getMinGiocatori():void{
+   this.minGiocatori=this.minGiocatoriSport[this.sport] ?? 2;
+    this.numeroGiocatori=this.minGiocatori;
+   
   }
 
   private getDataOdierna(): string {
@@ -152,7 +175,8 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
   }
 
   // Richiamato quando l'utente cambia la data nel form
-  onCambioData(): void {
+  onCambioData(nuovaData: string): void {
+    this.dataSelezionata=nuovaData;
     this.disponibilitaCampoId = null;
     this.slotDisponibili = [];
     this.messaggioErrore = '';
@@ -216,8 +240,8 @@ export class PrenotazioneModal implements OnInit, OnDestroy {
       return;
     }
 
-  if (!Number.isInteger(this.numeroGiocatori) || this.numeroGiocatori < 2) {
-      this.messaggioErrore = 'Il numero di giocatori deve essere maggiore di 1';
+  if (!Number.isInteger(this.numeroGiocatori) || this.numeroGiocatori < this.minGiocatori) {
+      this.messaggioErrore = `Il numero minimo di giocatori per ${this.sport} è ${this.minGiocatori}`;
       return;
     }
      // Evita invii multipli

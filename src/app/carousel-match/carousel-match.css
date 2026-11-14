@@ -312,7 +312,8 @@
 /* PULSANTE CAROUSEL                         */
 /* ========================================= */
 
-.carousel-next {
+
+/*.carousel-next {
 
   position: absolute;
   top: 50%;
@@ -356,8 +357,43 @@
     background-color 0.2s ease,
     transform 0.2s ease;
 
+}*/
+.carousel-next,
+.carousel-prev {
+
+  position: absolute;
+
+  /* POSIZIONE VERTICALE */
+  top: 150px;
+
+  /* CENTRATURA VERTICALE DEL PULSANTE */
+  transform: translateY(-50%);
+
+  width: 50px;
+  height: 50px;
+
+  border: none;
+  border-radius: 50%;
+
+  background-color: #07516c;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  z-index: 10;
+
 }
 
+.carousel-next {
+  right: 15px;
+}
+
+.carousel-prev {
+  left: 15px;
+}
 
 .carousel-next:hover {
 
@@ -372,80 +408,106 @@
 
 /* ========================================= */
 /* RESPONSIVE                                */
-/* ========================================= */
+/* ========================================= *//* DESKTOP GRANDE */
+@media (min-width: 1200px) {
 
-@media (max-width: 1000px) {
-
-  .cards-wrapper {
-
-    gap: 25px;
-
+  .carousel-next,
+  .carousel-prev {
+    top: 150px;
   }
 
-  .field-card {
-
-    flex-basis: 250px;
-
-    width: 250px;
-
+  .carousel-next {
+    right: 30px;
   }
 
-  
+  .carousel-prev {
+    left: 30px;
+  }
+
 }
 
 
-@media (max-width: 700px) {
+/* LAPTOP E TABLET ORIZZONTALE */
+@media (min-width: 992px) and (max-width: 1199px) {
 
-  .featured-header {
+  .carousel-next,
+  .carousel-prev {
+    top: 150px;
+  }
 
-    padding: 0 15px;
+  .carousel-next {
+    right: 20px;
 
   }
 
-  .cards-wrapper {
-
-    padding-left: 15px;
-
-    gap: 18px;
-
+  .carousel-prev {
+    left: 20px;
   }
 
-  .field-card {
+}
 
-    flex-basis: 280px;
 
-    width: 280px;
+/* TABLET */
+@media (min-width: 769px) and (max-width: 991px) {
 
+  .carousel-next,
+  .carousel-prev {
+    top: 150px;
   }
 
   .carousel-next {
     right: 15px;
   }
 
-  .carousel-prev{
-    right:15px;
+  .carousel-prev {
+    left: 15px;
   }
 
 }
 
 
-@media (max-width: 450px) {
+/* SMARTPHONE */
+@media (max-width: 768px) {
 
-  .field-card {
-
-    flex-basis: 290px;
-
-    width: 290px;
-
+  .carousel-next,
+  .carousel-prev {
+    top: 150px;
+    width: 40px;
+    height: 40px;
   }
 
-  .view-all {
+  .carousel-next {
+    right: 10px;
+  }
 
-    font-size: 12px;
-
+  .carousel-prev {
+    left: 10px;
   }
 
 }
+
+
+/* SMARTPHONE PICCOLI */
+@media (max-width: 480px) {
+
+  .carousel-next,
+  .carousel-prev {
+    top: 150px;
+    width: 35px;
+    height: 35px;
+  }
+
+  .carousel-next {
+    right: 5px;
+  }
+
+  .carousel-prev {
+    left: 5px;
+  }
+
+}
+
+
 
 .title-line{
   color: antiquewhite;
